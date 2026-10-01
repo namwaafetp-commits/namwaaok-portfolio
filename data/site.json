@@ -1,15 +1,36 @@
 {
   "name": "NAMWAAOK",
-  "fullName": "Waritnun Anupat, MD",
-  "tagline": "Where medicine meets code",
-  "heroLine": "Doctor · Builder · Disease detective",
-  "bio": "Waritnun Anupat, MD: a doctor in the Field Epidemiology Training Program (FETP), Bangkok. I build health apps, analyse data and explore agentic AI and automation. If you share these interests, get in touch.",
+  "fullName": {
+    "en": "Waritnun Anupat, MD",
+    "th": "นพ.วริทธิ์นันท์ อนุพัฒน์"
+  },
+  "tagline": {
+    "en": "Where medicine meets code",
+    "th": "เมื่อการแพทย์พบกับโค้ด"
+  },
+  "heroLine": {
+    "en": "Doctor · Builder · Disease detective",
+    "th": "แพทย์ · นักพัฒนา · นักสืบโรค"
+  },
+  "bio": {
+    "en": "Waritnun Anupat, MD: a doctor in the Field Epidemiology Training Program (FETP), Bangkok. I build health apps, analyse data and explore agentic AI and automation. If you share these interests, get in touch.",
+    "th": "นพ.วริทธิ์นันท์ อนุพัฒน์ แพทย์ในหลักสูตรฝึกอบรมแพทย์ระบาดวิทยาภาคสนาม (FETP) กรุงเทพฯ ผมสร้างแอปสุขภาพ วิเคราะห์ข้อมูล และสนใจ AI เอเจนต์กับระบบอัตโนมัติ หากสนใจเรื่องเหล่านี้เหมือนกัน ติดต่อกันได้เลยครับ"
+  },
   "skills": [
-    "AI tools",
+    {
+      "en": "AI tools",
+      "th": "เครื่องมือ AI"
+    },
     "Python",
     "R",
-    "Data analytics",
-    "Video editing"
+    {
+      "en": "Data analytics",
+      "th": "การวิเคราะห์ข้อมูล"
+    },
+    {
+      "en": "Video editing",
+      "th": "ตัดต่อวิดีโอ"
+    }
   ],
   "photo": "assets/img/portrait.jpg",
   "latest": "MantaSlide",
@@ -41,8 +62,8 @@
         "th": "คลิปสั้น 60–90 วินาที"
       },
       "text": {
-        "en": "The same topics as quick, easy-to-follow summaries. In Thai.",
-        "th": "หัวข้อเดียวกันในรูปแบบสรุปสั้นๆ ดูง่าย ทำตามได้"
+        "en": "Evidence-based medical content in bite-sized form: chronic conditions, medicines and health myths, easy to follow and easy to act on. In Thai.",
+        "th": "สาระทางการแพทย์อิงหลักฐานแบบสั้นกระชับ เรื่องโรคประจำตัว ยา และความเชื่อผิดๆ ด้านสุขภาพ ดูง่าย ทำตามได้จริง"
       },
       "cta": {
         "en": "Watch on TikTok",
@@ -51,36 +72,118 @@
     }
   ],
   "collab": {
-    "intro": "I'm looking for people to build and research with, and I'm open to job opportunities. Pick the one closest to you and send a short note.",
+    "intro": {
+      "en": "I'm looking for people to build and research with, and I'm open to job opportunities. Pick the one closest to you and send a short note.",
+      "th": "ผมกำลังมองหาคนที่อยากสร้างและวิจัยไปด้วยกัน และเปิดรับโอกาสในการทำงานด้วยครับ เลือกหัวข้อที่ใกล้เคียงที่สุด แล้วส่งข้อความสั้นๆ มาได้เลย"
+    },
     "topics": [
       {
-        "title": "Health apps",
-        "text": "Tools for patients, clinics and field teams."
+        "title": {
+          "en": "Health apps",
+          "th": "แอปสุขภาพ"
+        },
+        "text": {
+          "en": "Tools for patients, clinics and field teams.",
+          "th": "เครื่องมือสำหรับผู้ป่วย คลินิก และทีมภาคสนาม"
+        },
+        "subject": {
+          "en": "Collaboration: Health apps",
+          "th": "ร่วมงาน: แอปสุขภาพ"
+        },
+        "line": {
+          "en": "I'd like to collaborate on health apps.",
+          "th": "สนใจร่วมงานเรื่องแอปสุขภาพ"
+        }
       },
       {
-        "title": "Outbreak & epi tools",
-        "text": "Surveillance, investigation and mapping."
+        "title": {
+          "en": "Outbreak & epi tools",
+          "th": "เครื่องมือเฝ้าระวังและระบาดวิทยา"
+        },
+        "text": {
+          "en": "Surveillance, investigation and mapping.",
+          "th": "การเฝ้าระวัง สอบสวนโรค และทำแผนที่"
+        },
+        "subject": {
+          "en": "Collaboration: Outbreak & epi tools",
+          "th": "ร่วมงาน: เครื่องมือเฝ้าระวังและระบาดวิทยา"
+        },
+        "line": {
+          "en": "I'd like to collaborate on outbreak and epi tools.",
+          "th": "สนใจร่วมงานเรื่องเครื่องมือเฝ้าระวังและระบาดวิทยา"
+        }
       },
       {
-        "title": "Agentic AI & automation",
-        "text": "AI agents and workflows for health work.",
-        "line": "I'd like to collaborate on agentic AI and automation."
+        "title": {
+          "en": "Agentic AI & automation",
+          "th": "AI เอเจนต์และระบบอัตโนมัติ"
+        },
+        "text": {
+          "en": "AI agents and workflows for health work.",
+          "th": "AI เอเจนต์และเวิร์กโฟลว์สำหรับงานด้านสุขภาพ"
+        },
+        "subject": {
+          "en": "Collaboration: Agentic AI & automation",
+          "th": "ร่วมงาน: AI เอเจนต์และระบบอัตโนมัติ"
+        },
+        "line": {
+          "en": "I'd like to collaborate on agentic AI and automation.",
+          "th": "สนใจร่วมงานเรื่อง AI เอเจนต์และระบบอัตโนมัติ"
+        }
       },
       {
-        "title": "Research",
-        "text": "Field investigations and public health studies."
+        "title": {
+          "en": "Research",
+          "th": "งานวิจัย"
+        },
+        "text": {
+          "en": "Field investigations and public health studies.",
+          "th": "การสอบสวนโรคภาคสนามและงานวิจัยด้านสาธารณสุข"
+        },
+        "subject": {
+          "en": "Collaboration: Research",
+          "th": "ร่วมงาน: งานวิจัย"
+        },
+        "line": {
+          "en": "I'd like to collaborate on research.",
+          "th": "สนใจร่วมงานวิจัย"
+        }
       },
       {
-        "title": "Websites",
-        "text": "Simple websites, built and deployed for you.",
-        "subject": "Website project",
-        "line": "I'd like help building and deploying a simple website."
+        "title": {
+          "en": "Websites",
+          "th": "เว็บไซต์"
+        },
+        "text": {
+          "en": "Simple websites, built and deployed for you.",
+          "th": "สร้างและเผยแพร่เว็บไซต์ง่ายๆ ให้คุณ"
+        },
+        "subject": {
+          "en": "Website project",
+          "th": "โปรเจกต์เว็บไซต์"
+        },
+        "line": {
+          "en": "I'd like help building and deploying a simple website.",
+          "th": "สนใจให้ช่วยสร้างและเผยแพร่เว็บไซต์ง่ายๆ"
+        }
       },
       {
-        "title": "Job opportunities",
-        "text": "Open to roles in health tech, public health and data. Bangkok or remote.",
-        "subject": "Job opportunity",
-        "line": "I'd like to talk about a job opportunity."
+        "title": {
+          "en": "Job opportunities",
+          "th": "โอกาสในการทำงาน"
+        },
+        "text": {
+          "en": "Open to roles in health tech, public health and data. Bangkok or remote.",
+          "th": "เปิดรับตำแหน่งด้านเฮลท์เทค สาธารณสุข และข้อมูล ในกรุงเทพฯ หรือรีโมต"
+        },
+        "subject": {
+          "en": "Job opportunity",
+          "th": "โอกาสในการทำงาน"
+        },
+        "line": {
+          "en": "I'd like to talk about a job opportunity.",
+          "th": "สนใจพูดคุยเรื่องโอกาสในการทำงาน"
+        }
       }
     ]
   }

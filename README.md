@@ -1,6 +1,6 @@
 # NAMWAAOK portfolio
 
-Portfolio of **Waritnun Anupat, MD**: a doctor in the Field Epidemiology Training Program (FETP), Bangkok, who builds health apps, analyses data and explores agentic AI and automation. It collects his apps, videos and published outbreak research in one place and invites collaboration.
+Portfolio of **Waritnun Anupat, MD**: a doctor in the Field Epidemiology Training Program (FETP), Bangkok, who builds health apps, analyses data and explores agentic AI and automation. It collects his apps, videos and published outbreak research in one place and invites collaboration. The whole site is available in **English and Thai** with an EN | ไทย switch in the nav.
 
 **Live site: [namwaaok.vercel.app](https://namwaaok.vercel.app)**
 
@@ -11,7 +11,7 @@ Portfolio of **Waritnun Anupat, MD**: a doctor in the Field Epidemiology Trainin
 | Section | What it shows |
 |---|---|
 | **Hero** | Three rows of kinetic type that speed up as you scroll, after a short loading counter. |
-| **About** | Portrait, bio, project counter, toolkit (AI tools, Python, R, data analytics, video editing), contact links, a "Latest" tile, and YouTube and TikTok tiles that describe each channel in Thai or English depending on the visitor's browser language. |
+| **About** | Portrait, bio, project counter, toolkit (AI tools, Python, R, data analytics, video editing), contact links, a "Latest" tile, and YouTube and TikTok tiles that describe each channel. |
 | **Work** | A bento grid of apps, a video and three first-author papers, with filter tabs (All, App, Video, Research). Video tiles play in a pop-up player. |
 | **Collaborate** | One-click, pre-filled emails for health apps, outbreak and epi tools, agentic AI, research, simple websites, and job opportunities. |
 
@@ -36,6 +36,7 @@ Static site, no build step: HTML, CSS and vanilla JavaScript (ES modules) with [
 Good to know:
 
 - Content lives in two JSON files and never touches the code.
+- Bilingual: every visible text exists in English and Thai. The switch re-renders the page instantly and remembers the choice.
 - Respects the OS "reduce motion" setting (marquees stay still, reveals become simple fades). Add `?motion=on` to the URL to preview the full animation anyway.
 - If GSAP fails to load, the page still shows all content. If the data files fail to load, visitors see a friendly fallback with a YouTube link.
 - Layout adapts from phone to desktop.
@@ -51,7 +52,12 @@ Then open http://localhost:8080. On Windows you can also double-click `start.bat
 ## Edit the content
 
 - `data/site.json`: name, tagline, hero line, bio, skills, photo, email, which project is "Latest", social links, the YouTube/TikTok channel descriptions (`channels`, each with `en` and `th` text) and the collaboration cards.
-- Add `?lang=th` or `?lang=en` to the URL to preview the Thai or English text.
+- Text fields can be a plain string or `{ "en": "...", "th": "..." }`. A missing Thai value falls back to English.
+- Fixed interface text (nav, headings, labels, button text, email templates) lives in `js/i18n.js`.
+
+## Language
+
+The page opens in Thai if the visitor's browser prefers Thai, otherwise English. The EN | ไทย switch overrides that and is remembered in the browser. Adding `?lang=th` or `?lang=en` to the URL forces a language, which is handy for previews.
 - `data/projects.json`: one block per project, video or paper. Required: `title`, `type`, and `link` (or `video`). Optional: `description`, `year`, `featured`, `tags`, `image`, `imageFit`, `imagePos`, `coverColor`, `logo`, `poster`, `fullTitle`.
 
 A new `type` automatically gets its own filter tab and colour.

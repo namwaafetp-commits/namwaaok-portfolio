@@ -86,6 +86,16 @@ img, video { display: block; max-width: 100%; }
   .nav-links.open { transform: none; }
 }
 
+/* Language switch */
+.nav-right { display: flex; align-items: center; gap: 24px; }
+.lang { position: relative; z-index: 60; display: inline-flex; padding: 3px; border: 1px solid var(--line); border-radius: 99px; background: rgba(10, 10, 10, .5); }
+.lang button { padding: 6px 13px; border: 0; border-radius: 99px; background: transparent; color: var(--mute); font: 500 11px var(--mono); letter-spacing: .14em; cursor: pointer; transition: background .25s, color .25s; }
+.lang button[lang="th"] { font: 500 13px var(--body); letter-spacing: 0; }
+.lang button:hover { color: var(--ink); }
+.lang button[aria-pressed="true"] { background: var(--lime); color: #000; }
+.lang button:focus-visible { outline: 2px solid var(--lime); outline-offset: 2px; }
+@media (max-width: 700px) { .nav-right { gap: 10px; } .lang button { padding: 6px 10px; } }
+
 /* ============ Marquees ============ */
 .marquee { display: block; overflow: hidden; white-space: nowrap; font: 400 clamp(56px, 14vw, 240px)/.95 var(--display); text-transform: uppercase; }
 .marquee-track { display: inline-flex; will-change: transform; animation: mq var(--dur, 28s) linear infinite; }
@@ -297,3 +307,15 @@ a.collab-card:focus-visible { outline: 2px solid var(--lime); outline-offset: 3p
   html:not(.force-motion) .arrow,
   html:not(.force-motion) .play { transition: none; }
 }
+
+/* ============ Thai typography ============
+   Anton has no Thai glyphs, so Thai falls back to Noto Sans Thai. Use its heavy weight, stop faux-bold on Anton,
+   loosen the tight display line-height (tone marks need room) and drop letter-spacing meant for Latin capitals. */
+html[lang="th"] :is(.logo, .marquee, h2, .t-bio .big, .ch-name, .collab-card h3, .t-latest .name, .project.featured .p-bottom h3, .nav-links) { font-weight: 800; font-synthesis-weight: none; }
+html[lang="th"] .marquee { line-height: 1.3; font-size: clamp(48px, 11.5vw, 210px); }
+html[lang="th"] :is(h2, .t-bio .big, .t-latest .name, .collab-card h3, .ch-name, .project.featured .p-bottom h3) { line-height: 1.25; }
+html[lang="th"] :is(.eyebrow, .label, .tag, .go, .tab, .hero-foot, .foot-note, .nav-links, .menu-btn, .badge, .chips span, .modal-title, .t-count small, .socials a, .loader-name) { letter-spacing: 0; }
+html[lang="th"] :is(.label, .go, .eyebrow, .tab, .tag, .badge) { font-size: 13px; }
+html[lang="th"] .nav-links { font-size: 14px; }
+html[lang="th"] .p-bottom h3, html[lang="th"] .collab-card p, html[lang="th"] .p-bottom p { line-height: 1.5; }
+@media (max-width: 700px) { html[lang="th"] .nav-links { font-size: clamp(2.6rem, 14vw, 4.4rem); } }

@@ -71,19 +71,20 @@ function initReveals() {
   if (!hasScrollTrigger()) return;
   const items = gsap.utils.toArray('.reveal');
   gsap.set(items, reduced ? { opacity: 0 } : { opacity: 0, y: 50 });
-  ScrollTrigger.batch(items, {
-    start: 'top 90%',
-    once: true,
-    onEnter: (batch) => gsap.to(batch, {
-      opacity: 1,
-      y: 0,
-      duration: reduced ? 0.4 : 0.9,
-      stagger: reduced ? 0 : 0.08,
-      ease: 'power3.out',
-      overwrite: true,
-      clearProps: 'transform,opacity', // hand control back to the CSS hover transforms
-    }),
+  const show = (els) => gsap.to(els, {
+    opacity: 1,
+    y: 0,
+    duration: reduced ? 0.4 : 0.9,
+    stagger: reduced ? 0 : 0.08,
+    ease: 'power3.out',
+    overwrite: true,
+    clearProps: 'transform,opacity', // hand control back to the CSS hover transforms
   });
+  ScrollTrigger.batch(items, { start: 'top 90%', once: true, onEnter: show });
+  // Triggers only fire for items still ahead of the visitor. If they scrolled while the intro loader was up,
+  // everything they already passed (or can see right now) would stay hidden forever, so reveal it here.
+  const passed = items.filter((el) => el.getBoundingClientRect().top < window.innerHeight * 0.9);
+  if (passed.length) show(passed);
 }
 
 function initCountUp() {
@@ -148,6 +149,11 @@ export function filterTiles(container, shouldShow) {
   tl.set(next, { opacity: 0, y: 36, scale: 0.94 });
   tl.to(next, { opacity: 1, y: 0, scale: 1, duration: 0.55, stagger: 0.07, ease: 'power3.out' });
   tl.set(tiles, { clearProps: 'opacity,transform' }); // hand hover transforms back to CSS
+}
+
+/* ---------- After a language switch the page height changes: re-measure scroll triggers ---------- */
+export function refresh() {
+  if (hasScrollTrigger()) ScrollTrigger.refresh();
 }
 
 /* ---------- Entry point ---------- */

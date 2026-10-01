@@ -2,83 +2,143 @@
   {
     "title": "Plathong",
     "type": "App",
-    "description": "A LINE chatbot for home blood-pressure tracking: send a photo of the monitor and AI reads it, charts the trend and reminds you of appointments.",
+    "description": {
+      "en": "A LINE chatbot for home blood-pressure tracking: send a photo of the monitor and AI reads it, charts the trend and reminds you of appointments.",
+      "th": "แชตบอตไลน์สำหรับบันทึกความดันที่บ้าน: ส่งรูปเครื่องวัดความดัน แล้ว AI อ่านค่า สรุปแนวโน้มเป็นกราฟ และเตือนวันนัดแพทย์"
+    },
     "link": "https://home-bp-guide.vercel.app/",
     "image": "assets/projects/plathong-cover.jpg",
     "imagePos": "50% 0%",
     "logo": "assets/projects/plathong-logo.png",
     "year": 2026,
     "featured": true,
-    "tags": ["AI OCR", "LINE OA"]
+    "tags": [
+      "AI OCR",
+      "LINE OA"
+    ]
   },
   {
-    "title": "Leptospirosis animation",
+    "title": {
+      "en": "Leptospirosis animation",
+      "th": "แอนิเมชันโรคฉี่หนู"
+    },
     "type": "Video",
-    "description": "A 60-second animated explainer on leptospirosis and flood water.",
+    "description": {
+      "en": "A 60-second animated explainer on leptospirosis and flood water.",
+      "th": "แอนิเมชันอธิบายโรคฉี่หนูและน้ำท่วม ความยาว 60 วินาที"
+    },
     "video": "assets/video/leptospirosis-0929.mp4",
     "poster": "assets/video/leptospirosis-0929.jpg",
     "year": 2026,
-    "tags": ["Animation", "Health"]
+    "tags": [
+      "Animation",
+      "Health"
+    ]
   },
   {
     "title": "Dog-Bite-Me",
     "type": "App",
-    "description": "Offline-first rabies guide in Thai, English and Burmese: triage a bite in about 5 taps, wash and go-now steps, and a printable vaccine dose card.",
+    "description": {
+      "en": "Offline-first rabies guide in Thai, English and Burmese: triage a bite in about 5 taps, wash and go-now steps, and a printable vaccine dose card.",
+      "th": "คู่มือรับมือเมื่อถูกสัตว์กัดข่วนที่ใช้ได้แม้ไม่มีอินเทอร์เน็ต มี 3 ภาษา (ไทย อังกฤษ พม่า): ประเมินแผลในราว 5 แตะ บอกวิธีล้างแผลและไปพบแพทย์ และมีสมุดบันทึกวัคซีนที่พิมพ์ได้"
+    },
     "link": "https://dog-bite-me.vercel.app/",
     "image": "assets/projects/dogbiteme-art.webp",
     "imageFit": "contain",
     "coverColor": "#faf5ec",
     "logo": "assets/projects/dogbiteme-logo.png",
     "year": 2026,
-    "tags": ["Rabies", "Web app"]
+    "tags": [
+      "Rabies",
+      "Web app"
+    ]
   },
   {
     "title": "Episignal",
     "type": "App",
-    "description": "Open global outbreak intelligence: reported infectious-disease events on a map, each one linked to its source.",
+    "description": {
+      "en": "Open global outbreak intelligence: reported infectious-disease events on a map, each one linked to its source.",
+      "th": "ข้อมูลข่าวกรองการระบาดทั่วโลกแบบเปิด: เหตุการณ์โรคติดเชื้อที่มีรายงานบนแผนที่ พร้อมลิงก์ไปยังแหล่งที่มาของทุกรายการ"
+    },
     "link": "https://episignal.72.61.151.132.sslip.io/",
     "image": "assets/projects/episignal-cover.jpg",
     "imagePos": "50% 0%",
     "logo": "assets/projects/episignal-logo.png",
     "year": 2026,
-    "tags": ["Epidemiology", "Map"]
+    "tags": [
+      "Epidemiology",
+      "Map"
+    ]
   },
   {
     "title": "MantaSlide",
     "type": "App",
-    "description": "Control PowerPoint from your phone over Wi-Fi: presenter notes, next-slide preview and a laser pointer. No app or account.",
+    "description": {
+      "en": "Control PowerPoint from your phone over Wi-Fi: presenter notes, next-slide preview and a laser pointer. No app or account.",
+      "th": "ควบคุม PowerPoint จากมือถือผ่าน Wi-Fi: อ่านโน้ตผู้พูด ดูตัวอย่างสไลด์ถัดไป และใช้เลเซอร์พอยน์เตอร์ ไม่ต้องติดตั้งแอปหรือสมัครสมาชิก"
+    },
     "link": "https://mantaslide.vercel.app/",
     "image": "assets/projects/mantaslide-cover.jpg",
     "imagePos": "70% 50%",
     "logo": "assets/projects/mantaslide-logo.png",
     "year": 2026,
-    "tags": ["Windows", "PowerPoint"]
+    "tags": [
+      "Windows",
+      "PowerPoint"
+    ]
   },
   {
-    "title": "School norovirus outbreak, Amnat Charoen",
+    "title": {
+      "en": "School norovirus outbreak, Amnat Charoen",
+      "th": "การระบาดของโนโรไวรัสในโรงเรียน อำนาจเจริญ"
+    },
     "fullTitle": "A Food Poisoning Outbreak in a School from Progressive Contamination of Norovirus, Amnat Charoen Province, Thailand, February 2025",
     "type": "Research",
-    "description": "142 of 470 people fell ill (30.2%). A chicken rice meal was the likely source, and later serving groups had higher risk, pointing to progressive contamination.",
+    "description": {
+      "en": "142 of 470 people fell ill (30.2%). A chicken rice meal was the likely source, and later serving groups had higher risk, pointing to progressive contamination.",
+      "th": "ป่วย 142 จาก 470 คน (ร้อยละ 30.2) แหล่งโรคที่น่าจะเป็นคือมื้ออาหารเมนูข้าวไก่ (chicken rice) และกลุ่มที่ได้รับอาหารรอบหลังมีความเสี่ยงสูงกว่า สะท้อนการปนเปื้อนที่สะสมต่อเนื่อง"
+    },
     "link": "https://he02.tci-thaijo.org/index.php/OSIR/article/view/277699/189478",
     "year": 2025,
-    "tags": ["OSIR 2025", "Norovirus"]
+    "tags": [
+      "OSIR 2025",
+      "Norovirus"
+    ]
   },
   {
-    "title": "Two rabies deaths, Prathai district",
+    "title": {
+      "en": "Two rabies deaths, Prathai district",
+      "th": "ผู้เสียชีวิตจากโรคพิษสุนัขบ้า 2 ราย อำเภอประทาย"
+    },
     "fullTitle": "Spatial and epidemiologic analysis of two human rabies fatalities reveals transmission drivers and prevention gaps in Prathai district Thailand 2025",
     "type": "Research",
-    "description": "Both deaths followed unvaccinated dog bites. Full five-dose PEP completion was under 1%, and true dog vaccination coverage was about 40%.",
+    "description": {
+      "en": "Both deaths followed unvaccinated dog bites. Full five-dose PEP completion was under 1%, and true dog vaccination coverage was about 40%.",
+      "th": "ทั้งสองรายถูกสุนัขที่ไม่ได้รับวัคซีนกัด การรับวัคซีนหลังสัมผัสโรคครบ 5 เข็มน้อยกว่าร้อยละ 1 และความครอบคลุมวัคซีนในสุนัขที่แท้จริงอยู่ราวร้อยละ 40"
+    },
     "link": "https://link.springer.com/article/10.1186/s12982-026-01782-9",
     "year": 2026,
-    "tags": ["Discover Public Health 2026", "Rabies"]
+    "tags": [
+      "Discover Public Health 2026",
+      "Rabies"
+    ]
   },
   {
-    "title": "Scarlet fever outbreak, Samut Prakan school",
+    "title": {
+      "en": "Scarlet fever outbreak, Samut Prakan school",
+      "th": "การระบาดของไข้อีดำอีแดงในโรงเรียนประถม สมุทรปราการ"
+    },
     "fullTitle": "Investigation of a Scarlet Fever Outbreak in a Primary School, Samut Prakan Province, Thailand, January – March 2025",
     "type": "Research",
-    "description": "93 cases (5.1% attack rate), spread person to person, helped by crowded classrooms and poor ventilation. Control measures stopped transmission.",
+    "description": {
+      "en": "93 cases (5.1% attack rate), spread person to person, helped by crowded classrooms and poor ventilation. Control measures stopped transmission.",
+      "th": "ผู้ป่วย 93 ราย (อัตราป่วยร้อยละ 5.1) ติดต่อจากคนสู่คน โดยห้องเรียนแออัดและอากาศถ่ายเทไม่ดีมีส่วนเอื้อ มาตรการควบคุมหยุดการระบาดได้"
+    },
     "link": "https://he04.tci-thaijo.org/index.php/JDHh/article/view/3866/2786",
     "year": 2026,
-    "tags": ["JDH 2026", "Scarlet fever"]
+    "tags": [
+      "JDH 2026",
+      "Scarlet fever"
+    ]
   }
 ]

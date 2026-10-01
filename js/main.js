@@ -1,6 +1,7 @@
 import { coverFor } from './covers.js';
 import { icon } from './icons.js';
 import * as anim from './animations.js';
+import { applyStatic, en, getLang, onLangChange, setLang, t, tr } from './i18n.js';
 
 const FALLBACK_YOUTUBE = 'https://www.youtube.com/channel/UCqHf52I0w3vtbhtkLtqmIcQ';
 const SOCIAL_LABELS = { youtube: 'YouTube', tiktok: 'TikTok' };
@@ -24,19 +25,27 @@ function h(tag, attrs = {}, ...kids) {
 const safeUrl = (u) => (/^(https?:|mailto:|assets\/|\.\/|\/)/i.test(u || '') ? u : '');
 const cap = (s) => s.charAt(0).toUpperCase() + s.slice(1);
 
-// Thai for visitors whose browser prefers Thai, English otherwise. ?lang=th or ?lang=en overrides (handy for previews).
-const uiLang = (() => {
-  const forced = new URLSearchParams(window.location.search).get('lang');
-  if (forced === 'th' || forced === 'en') return forced;
-  const prefs = navigator.languages && navigator.languages.length ? navigator.languages : [navigator.language || ''];
-  return prefs.some((l) => /^th/i.test(l)) ? 'th' : 'en';
-})();
-const tr = (obj) => (obj && (obj[uiLang] || obj.en)) || '';
+// Everything the renderers need; a language switch re-renders from this without refetching.
+const state = { site: null, projects: [], filter: 'All' };
+
+async function loadJSON(path) {
+  const res = await fetch(path, { cache: 'no-cache' });
+  if (!res.ok) throw new Error(`${path}: HTTP ${res.status}`);
+  return res.json();
+}
+
+const typeLabel = (type) => {
+  const key = `type.${type}`;
+  const label = t(key);
+  return label === key ? type : label;
+};
+
+const firstName = (site) => tr(site.fullName || site.name || '').split(/[ ,]/)[0];
 
 // Email first, then each social from site.json. One list feeds both the About tile and the footer.
 function contactLinks(site) {
   const links = [];
-  if (site.email) links.push({ name: 'email', label: 'Email', href: `mailto:${site.email}`, external: false });
+  if (site.email) links.push({ name: 'email', label: t('linkEmail'), href: `mailto:${site.email}`, external: false });
   for (const [name, url] of Object.entries(site.socials || {})) {
     if (safeUrl(url)) links.push({ name, label: SOCIAL_LABELS[name] || cap(name), href: url, external: true });
   }
@@ -51,43 +60,50 @@ function linkEl(link, attrs = {}, ...extra) {
   return a;
 }
 
-async function loadJSON(path) {
-  const res = await fetch(path, { cache: 'no-cache' });
-  if (!res.ok) throw new Error(`${path}: HTTP ${res.status}`);
-  return res.json();
+/* ---------- Nav ---------- */
+function setMenuLabel() {
+  const open = $('#nav-links').classList.contains('open');
+  $('#menu-btn').textContent = open ? t('close') : t('menu');
 }
 
-/* ---------- Nav ---------- */
 function setupNav() {
   const btn = $('#menu-btn');
   const links = $('#nav-links');
   const setOpen = (open) => {
     links.classList.toggle('open', open);
     btn.setAttribute('aria-expanded', String(open));
-    btn.textContent = open ? 'Close' : 'Menu';
     document.body.style.overflow = open ? 'hidden' : '';
+    setMenuLabel();
   };
   btn.addEventListener('click', () => setOpen(!links.classList.contains('open')));
   links.addEventListener('click', (e) => { if (e.target.closest('a')) setOpen(false); });
+  for (const b of document.querySelectorAll('.lang [data-lang]')) {
+    b.addEventListener('click', () => setLang(b.dataset.lang));
+  }
 }
 
-/* ---------- Hero ---------- */
-// Rebuilds the outlined marquee row from site.heroLine ("Word · Word · Word").
-function renderHeroLine(text) {
-  const track = $('.hero .row-outline .marquee-track');
-  const items = String(text || '').split('·').map((s) => s.trim().toUpperCase()).filter(Boolean);
-  if (!track || !items.length) return;
-  let pieces = [...items];
-  while (pieces.join(' · ').length < 48) pieces = pieces.concat(items); // keep one set wider than the screen
+/* ---------- Marquees: rebuilt from text so a language switch can change them ---------- */
+// `tail` is appended to every piece (e.g. a separator dot). One set must be wider than the screen.
+function buildMarquee(track, pieces, tail = ' ') {
+  if (!track || !pieces.length) return;
+  let list = [...pieces];
+  while (list.join(tail).length < 40) list = list.concat(pieces);
   const makeSet = (hidden) => h('div', { class: 'mq-set', 'aria-hidden': hidden ? 'true' : null },
-    pieces.map((piece) => h('span', { text: `${piece} · ` })));
+    list.map((piece) => h('span', { text: `${piece}${tail}` })));
   track.replaceChildren(makeSet(false), makeSet(true));
+}
+
+function renderMarquees(site) {
+  const pieces = tr(site.heroLine).split('·').map((s) => s.trim()).filter(Boolean);
+  buildMarquee($('.hero .row-outline .marquee-track'), pieces, ' · ');
+  buildMarquee($('.hero .row-lime .marquee-track'), [t('heroWork')]);
+  buildMarquee($('#cta .marquee-track'), [t('cta')]);
 }
 
 /* ---------- About ---------- */
 function latestProject(projects, site) {
-  // site.latest (a project title) wins; otherwise highest year, ties keep file order.
-  const picked = site.latest && projects.find((p) => p.title === site.latest);
+  // site.latest (a project's English title) wins; otherwise highest year, ties keep file order.
+  const picked = site.latest && projects.find((p) => en(p.title) === site.latest);
   return picked || [...projects].sort((a, b) => (b.year || 0) - (a.year || 0))[0];
 }
 
@@ -95,28 +111,29 @@ function renderAbout(site, projects) {
   const grid = $('#about-grid');
   grid.replaceChildren();
 
+  const owner = tr(site.fullName) || site.name || '';
   const photo = safeUrl(site.photo);
   grid.classList.toggle('has-photo', Boolean(photo));
   if (photo) {
     grid.append(h('div', { class: 'tile t-photo reveal' },
-      h('img', { src: photo, alt: `Portrait of ${site.fullName || site.name || 'the owner'}`, width: '900', height: '900', decoding: 'async' }),
-      h('span', { class: 'chip', text: site.fullName || 'FETP · Bangkok' })));
+      h('img', { src: photo, alt: t('portrait', { name: owner }), width: '900', height: '900', decoding: 'async' }),
+      h('span', { class: 'chip', text: owner || 'FETP · Bangkok' })));
   }
 
   grid.append(
     h('div', { class: 'tile t-bio reveal' },
-      h('div', {}, h('span', { class: 'label', text: 'Who' }), h('h3', { class: 'big', text: site.tagline || '' })),
-      site.bio ? h('p', { text: site.bio }) : null),
+      h('div', {}, h('span', { class: 'label', text: t('labelWho') }), h('h3', { class: 'big', text: tr(site.tagline) })),
+      site.bio ? h('p', { text: tr(site.bio) }) : null),
     h('div', { class: 'tile t-count reveal' },
-      h('span', { class: 'label', text: 'Projects' }),
+      h('span', { class: 'label', text: t('labelProjects') }),
       h('span', { class: 'num', 'data-count': projects.length, text: String(projects.length) }),
-      h('small', { text: 'and counting' })),
+      h('small', { text: t('andCounting') })),
   );
 
   const links = contactLinks(site);
   if (links.length) {
     grid.append(h('div', { class: 'tile t-social reveal' },
-      h('span', { class: 'label', text: 'Find me' }),
+      h('span', { class: 'label', text: t('labelFindMe') }),
       links.map((l) => linkEl(l, {}, h('span', { class: 'ext', 'aria-hidden': 'true', text: '↗' })))));
   }
 
@@ -124,9 +141,8 @@ function renderAbout(site, projects) {
     const url = safeUrl((site.socials || {})[ch.social]);
     if (!url) continue;
     const label = SOCIAL_LABELS[ch.social] || cap(ch.social);
-    const ico = icon(ch.social);
-    grid.append(h('a', { class: 'tile t-channel reveal', href: url, target: '_blank', rel: 'noopener noreferrer', lang: uiLang },
-      h('div', { class: 'ch-head' }, ico, h('span', { class: 'ch-name', text: label }), h('span', { class: 'ext', 'aria-hidden': 'true', text: '↗' })),
+    grid.append(h('a', { class: 'tile t-channel reveal', href: url, target: '_blank', rel: 'noopener noreferrer', lang: getLang() },
+      h('div', { class: 'ch-head' }, icon(ch.social), h('span', { class: 'ch-name', text: label }), h('span', { class: 'ext', 'aria-hidden': 'true', text: '↗' })),
       h('span', { class: 'label', text: tr(ch.label) }),
       h('p', { text: tr(ch.text) }),
       h('span', { class: 'go', text: tr(ch.cta) })));
@@ -134,26 +150,26 @@ function renderAbout(site, projects) {
 
   if ((site.skills || []).length) {
     grid.append(h('div', { class: 'tile t-skills reveal' },
-      h('span', { class: 'label', text: 'Toolkit' }),
-      h('div', { class: 'pills' }, site.skills.map((s) => h('span', { class: 'pill', text: s })))));
+      h('span', { class: 'label', text: t('labelToolkit') }),
+      h('div', { class: 'pills' }, site.skills.map((s) => h('span', { class: 'pill', text: tr(s) })))));
   }
 
   const latest = latestProject(projects, site);
   if (latest) {
     const url = safeUrl(latest.link);
     const inner = [
-      h('div', {}, h('span', { class: 'label', text: 'Latest' }), h('span', { class: 'name', text: latest.title })),
+      h('div', {}, h('span', { class: 'label', text: t('labelLatest') }), h('span', { class: 'name', text: tr(latest.title) })),
     ];
     let tile;
     if (latest.video) {
-      inner.push(h('span', { class: 'go', text: 'Watch ▶' }));
+      inner.push(h('span', { class: 'go', text: t('watch') }));
       tile = h('button', { class: 'tile t-latest reveal', type: 'button' }, inner);
       tile.addEventListener('click', () => openModal(latest));
     } else if (url) {
-      inner.push(h('span', { class: 'go', text: 'Open ↗' }));
+      inner.push(h('span', { class: 'go', text: t('open') }));
       tile = h('a', { class: 'tile t-latest reveal', href: url, target: '_blank', rel: 'noopener noreferrer' }, inner);
     } else {
-      inner.push(h('span', { class: 'go', text: 'Coming soon' }));
+      inner.push(h('span', { class: 'go', text: t('soon') }));
       tile = h('div', { class: 'tile t-latest reveal' }, inner);
     }
     grid.append(tile);
@@ -162,6 +178,8 @@ function renderAbout(site, projects) {
 
 /* ---------- Work ---------- */
 function projectTile(p) {
+  const title = tr(p.title);
+  const fullTitle = p.fullTitle ? tr(p.fullTitle) : '';
   const url = safeUrl(p.link);
   const hasVideo = !!p.video;
   const tile = h('article', {
@@ -169,35 +187,36 @@ function projectTile(p) {
     'data-type': p.type,
   });
 
-  tile.append(coverFor(p));
+  tile.append(coverFor({ ...p, title: en(p.title) })); // covers stay keyed to the English title, so they never change with language
   if (p.image || p.poster) tile.append(h('div', { class: 'scrim' }));
 
   if (hasVideo) {
-    const btn = h('button', { class: 'project-link', type: 'button', 'aria-label': `Play video: ${p.title}` });
+    const btn = h('button', { class: 'project-link', type: 'button', 'aria-label': t('playAria', { title }) });
     btn.addEventListener('click', () => openModal(p));
     tile.append(btn, h('span', { class: 'play', 'aria-hidden': 'true', text: '▶' }));
   } else if (url) {
     tile.append(h('a', {
       class: 'project-link', href: url, target: '_blank', rel: 'noopener noreferrer',
-      'aria-label': `${p.fullTitle || p.title} (opens in a new tab)`,
-      title: p.fullTitle || null,
+      'aria-label': t('opensNew', { title: fullTitle || title }),
+      title: fullTitle || null,
     }));
   }
 
   const corner = hasVideo ? null
     : url ? h('span', { class: 'arrow', 'aria-hidden': 'true', text: '↗' })
-    : h('span', { class: 'badge', text: 'Private · coming soon' });
+    : h('span', { class: 'badge', text: t('badgePrivate') });
 
+  const description = tr(p.description);
   tile.append(h('div', { class: 'p-in' },
     h('div', { class: 'p-top' },
       h('div', { class: 'p-id' },
         safeUrl(p.logo) ? h('img', { class: 'p-logo', src: p.logo, alt: '', width: '40', height: '40', loading: 'lazy', decoding: 'async' }) : null,
-        h('span', { class: 'tag', text: p.type })),
+        h('span', { class: 'tag', text: typeLabel(p.type) })),
       corner),
     h('div', { class: 'p-bottom' },
-      h('h3', { text: p.title }),
-      p.description ? h('p', { text: p.description }) : null,
-      (p.tags || []).length ? h('div', { class: 'chips' }, p.tags.map((t) => h('span', { text: t }))) : null)));
+      h('h3', { text: title }),
+      description ? h('p', { text: description }) : null,
+      (p.tags || []).length ? h('div', { class: 'chips' }, p.tags.map((tag) => h('span', { text: tag }))) : null)));
 
   return tile;
 }
@@ -208,18 +227,24 @@ function renderWork(projects) {
   grid.replaceChildren(...projects.map(projectTile));
 
   const types = [...new Set(projects.map((p) => p.type))];
+  if (!types.includes(state.filter)) state.filter = 'All';
   tabs.replaceChildren();
   tabs.hidden = types.length < 2;
   if (types.length < 2) return;
 
-  const select = (type, activeBtn) => {
-    anim.filterTiles(grid, (tile) => type === 'All' || tile.dataset.type === type);
-    for (const b of tabs.children) b.setAttribute('aria-pressed', String(b === activeBtn));
-  };
+  const matches = (tile) => state.filter === 'All' || tile.dataset.type === state.filter;
+  for (const tile of grid.querySelectorAll('.project')) tile.hidden = !matches(tile); // keep the chosen filter across a language switch
 
   for (const type of ['All', ...types]) {
-    const btn = h('button', { class: 'tab', type: 'button', 'aria-pressed': String(type === 'All'), text: type });
-    btn.addEventListener('click', () => select(type, btn));
+    const btn = h('button', {
+      class: 'tab', type: 'button', 'data-type': type, 'aria-pressed': String(type === state.filter),
+      text: type === 'All' ? t('tabAll') : typeLabel(type),
+    });
+    btn.addEventListener('click', () => {
+      state.filter = type;
+      anim.filterTiles(grid, matches);
+      for (const b of tabs.children) b.setAttribute('aria-pressed', String(b.dataset.type === type));
+    });
     tabs.append(btn);
   }
 }
@@ -234,47 +259,41 @@ function renderCollab(site) {
   box.replaceChildren();
   if (!topics.length) return;
 
-  if (site.collab.intro) box.append(h('p', { class: 'collab-intro reveal', text: site.collab.intro }));
-  for (const t of topics) {
+  if (site.collab.intro) box.append(h('p', { class: 'collab-intro reveal', text: tr(site.collab.intro) }));
+  for (const topic of topics) {
+    const title = tr(topic.title);
     const inner = [
-      h('h3', { text: t.title }),
-      t.text ? h('p', { text: t.text }) : null,
-      site.email ? h('span', { class: 'go', text: 'Email me ↗' }) : null,
+      h('h3', { text: title }),
+      topic.text ? h('p', { text: tr(topic.text) }) : null,
+      site.email ? h('span', { class: 'go', text: t('emailMe') }) : null,
     ];
-    box.append(site.email
-      ? h('a', {
-        class: 'collab-card reveal',
-        href: mailto(site.email, t.subject || `Collaboration: ${t.title}`,
-          `Hi ${(site.fullName || site.name || '').split(/[ ,]/)[0]},
-
-${t.line || `I'd like to collaborate on ${t.title.toLowerCase()}.`}
-
-A bit about me / what I'm working on:
-`),
-      }, inner)
-      : h('div', { class: 'collab-card reveal' }, inner));
+    if (!site.email) {
+      box.append(h('div', { class: 'collab-card reveal' }, inner));
+      continue;
+    }
+    const subject = tr(topic.subject) || `${t('mailSubjectPrefix')}${title}`;
+    const line = tr(topic.line) || t('mailLineDefault', { topic: title.toLowerCase() });
+    box.append(h('a', {
+      class: 'collab-card reveal',
+      href: mailto(site.email, subject, `${t('mailHi', { name: firstName(site) })}\n\n${line}\n\n${t('mailAbout')}\n`),
+    }, inner));
   }
 }
 
 function renderContact(site) {
-  const youtube = safeUrl((site.socials || {}).youtube) || FALLBACK_YOUTUBE;
   const cta = $('#cta');
   if (site.email) {
-    cta.href = mailto(site.email, 'Collaboration', `Hi ${(site.fullName || site.name || '').split(/[ ,]/)[0]},
-
-I'd like to collaborate with you.
-
-What I'm working on:
-`);
+    cta.href = mailto(site.email, t('mailCtaSubject'),
+      `${t('mailHi', { name: firstName(site) })}\n\n${t('mailCtaLine')}\n\n${t('mailCtaAbout')}\n`);
+    cta.removeAttribute('target');
+    cta.removeAttribute('rel');
   } else {
-    cta.href = youtube;
+    cta.href = safeUrl((site.socials || {}).youtube) || FALLBACK_YOUTUBE;
     cta.target = '_blank';
     cta.rel = 'noopener noreferrer';
   }
   renderCollab(site);
-
-  const row = $('#socials');
-  row.replaceChildren(...contactLinks(site).map((l) => linkEl(l)));
+  $('#socials').replaceChildren(...contactLinks(site).map((l) => linkEl(l)));
 }
 
 /* ---------- Video modal ---------- */
@@ -286,7 +305,7 @@ function openModal(p) {
   lastFocus = document.activeElement;
   modalVideo.poster = safeUrl(p.poster) || '';
   modalVideo.src = safeUrl(p.video);
-  $('#modal-title').textContent = p.title;
+  $('#modal-title').textContent = tr(p.title);
   modal.hidden = false;
   document.body.style.overflow = 'hidden';
   modalVideo.play().catch(() => {}); // autoplay with sound may be blocked; controls stay available
@@ -306,34 +325,52 @@ function closeModal() {
 modal.addEventListener('click', (e) => { if (e.target.closest('[data-close]')) closeModal(); });
 document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeModal(); });
 
-/* ---------- Boot ---------- */
-async function main() {
-  setupNav();
+/* ---------- Render everything for the current language ---------- */
+function renderFallback() {
+  $('#work-grid').replaceChildren(h('div', { class: 'notice' },
+    h('p', { text: `${t('loadError')} ` }),
+    h('a', { href: FALLBACK_YOUTUBE, target: '_blank', rel: 'noopener noreferrer', text: t('loadErrorLink') })));
+  $('#tabs').hidden = true;
+  renderContact({ socials: { youtube: FALLBACK_YOUTUBE } });
+  buildMarquee($('.hero .row-lime .marquee-track'), [t('heroWork')]);
+  buildMarquee($('#cta .marquee-track'), [t('cta')]);
+  $('#about').hidden = true;
+}
 
-  let site;
-  let projects;
-  try {
-    [site, projects] = await Promise.all([loadJSON('data/site.json'), loadJSON('data/projects.json')]);
-    if (!Array.isArray(projects)) throw new Error('projects.json must be a list');
-    projects = projects
-      .filter((p) => p && typeof p.title === 'string' && p.title.trim())
-      .map((p) => ({ ...p, type: (p.type || 'Project').toString() }));
-  } catch (err) {
-    console.error('Could not load site data:', err);
-    $('#work-grid').replaceChildren(h('div', { class: 'notice' },
-      h('p', { text: 'Couldn’t load the projects right now. ' }),
-      h('a', { href: FALLBACK_YOUTUBE, target: '_blank', rel: 'noopener noreferrer', text: 'Watch my videos on YouTube ↗' })));
-    renderContact({ socials: { youtube: FALLBACK_YOUTUBE } });
-    $('#about').hidden = true;
-    anim.start();
-    return;
-  }
-
+function renderAll() {
+  const { site, projects } = state;
+  applyStatic();
+  setMenuLabel();
+  if (!site) { renderFallback(); return; }
   $('#work-count').textContent = String(projects.length);
-  renderHeroLine(site.heroLine);
+  renderMarquees(site);
   renderAbout(site, projects);
   renderWork(projects);
   renderContact(site);
+}
+
+/* ---------- Boot ---------- */
+async function main() {
+  applyStatic();
+  setupNav();
+  onLangChange(() => {
+    renderAll();
+    anim.refresh(); // positions changed; new tiles are simply visible (no replay of the scroll reveals)
+  });
+
+  try {
+    const [site, projects] = await Promise.all([loadJSON('data/site.json'), loadJSON('data/projects.json')]);
+    if (!Array.isArray(projects)) throw new Error('projects.json must be a list');
+    state.site = site;
+    state.projects = projects
+      .filter((p) => p && en(p.title).trim())
+      .map((p) => ({ ...p, type: (p.type || 'Project').toString() }));
+  } catch (err) {
+    console.error('Could not load site data:', err);
+    state.site = null;
+  }
+
+  renderAll();
   anim.start();
 }
 
