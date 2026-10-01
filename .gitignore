@@ -1,0 +1,6 @@
+# local-only: planning docs, brainstorm mockups, original unoptimized photo, test pages
+docs/
+.superpowers/
+ChatGPT Image*.png
+_test-*.html
+*.log

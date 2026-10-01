@@ -1,0 +1,40 @@
+{
+  "name": "NAMWAAOK",
+  "fullName": "Waritnun Anupat, MD",
+  "tagline": "Where medicine meets code",
+  "heroLine": "Doctor · Builder · Disease detective",
+  "bio": "Waritnun Anupat, MD: a doctor in the Field Epidemiology Training Program (FETP), Bangkok. I build health apps and explore agentic AI and automation. If you share these interests, get in touch.",
+  "skills": [
+    "AI tools",
+    "Python",
+    "R",
+    "Video editing"
+  ],
+  "photo": "assets/img/portrait.jpg",
+  "email": "anupatwritnun@gmail.com",
+  "socials": {
+    "youtube": "https://www.youtube.com/channel/UCqHf52I0w3vtbhtkLtqmIcQ",
+    "tiktok": "https://www.tiktok.com/@namwaaokok"
+  },
+  "collab": {
+    "intro": "I'm looking for people to build and research with. If one of these is your area, send a short note about what you're working on.",
+    "topics": [
+      {
+        "title": "Health apps",
+        "text": "Tools for patients, clinics and field teams."
+      },
+      {
+        "title": "Outbreak & epi tools",
+        "text": "Surveillance, investigation and mapping."
+      },
+      {
+        "title": "Agentic AI & automation",
+        "text": "AI agents and workflows for health work."
+      },
+      {
+        "title": "Research",
+        "text": "Field investigations and public health studies."
+      }
+    ]
+  }
+}

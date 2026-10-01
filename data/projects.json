@@ -1,0 +1,84 @@
+[
+  {
+    "title": "Plathong",
+    "type": "App",
+    "description": "A LINE chatbot for home blood-pressure tracking: send a photo of the monitor and AI reads it, charts the trend and reminds you of appointments.",
+    "link": "https://home-bp-guide.vercel.app/",
+    "image": "assets/projects/plathong-cover.jpg",
+    "imagePos": "50% 0%",
+    "logo": "assets/projects/plathong-logo.png",
+    "year": 2026,
+    "featured": true,
+    "tags": ["AI OCR", "LINE OA"]
+  },
+  {
+    "title": "Leptospirosis animation",
+    "type": "Video",
+    "description": "A 60-second animated explainer on leptospirosis and flood water.",
+    "video": "assets/video/leptospirosis-0929.mp4",
+    "poster": "assets/video/leptospirosis-0929.jpg",
+    "year": 2026,
+    "tags": ["Animation", "Health"]
+  },
+  {
+    "title": "Dog-Bite-Me",
+    "type": "App",
+    "description": "Offline-first rabies guide in Thai, English and Burmese: triage a bite in about 5 taps, wash and go-now steps, and a printable vaccine dose card.",
+    "link": "https://dog-bite-me.vercel.app/",
+    "image": "assets/projects/dogbiteme-art.webp",
+    "imageFit": "contain",
+    "coverColor": "#faf5ec",
+    "logo": "assets/projects/dogbiteme-logo.png",
+    "year": 2026,
+    "tags": ["Rabies", "Web app"]
+  },
+  {
+    "title": "Episignal",
+    "type": "App",
+    "description": "Open global outbreak intelligence: reported infectious-disease events on a map, each one linked to its source.",
+    "link": "https://episignal.72.61.151.132.sslip.io/",
+    "image": "assets/projects/episignal-cover.jpg",
+    "imagePos": "50% 0%",
+    "logo": "assets/projects/episignal-logo.png",
+    "year": 2026,
+    "tags": ["Epidemiology", "Map"]
+  },
+  {
+    "title": "MantaSlide",
+    "type": "App",
+    "description": "Control PowerPoint from your phone over Wi-Fi: presenter notes, next-slide preview and a laser pointer. No app or account.",
+    "link": "https://mantaslide.vercel.app/",
+    "image": "assets/projects/mantaslide-cover.jpg",
+    "imagePos": "70% 50%",
+    "logo": "assets/projects/mantaslide-logo.png",
+    "year": 2026,
+    "tags": ["Windows", "PowerPoint"]
+  },
+  {
+    "title": "School norovirus outbreak, Amnat Charoen",
+    "fullTitle": "A Food Poisoning Outbreak in a School from Progressive Contamination of Norovirus, Amnat Charoen Province, Thailand, February 2025",
+    "type": "Research",
+    "description": "142 of 470 people fell ill (30.2%). A chicken rice meal was the likely source, and later serving groups had higher risk, pointing to progressive contamination.",
+    "link": "https://he02.tci-thaijo.org/index.php/OSIR/article/view/277699/189478",
+    "year": 2025,
+    "tags": ["OSIR 2025", "Norovirus"]
+  },
+  {
+    "title": "Two rabies deaths, Prathai district",
+    "fullTitle": "Spatial and epidemiologic analysis of two human rabies fatalities reveals transmission drivers and prevention gaps in Prathai district Thailand 2025",
+    "type": "Research",
+    "description": "Both deaths followed unvaccinated dog bites. Full five-dose PEP completion was under 1%, and true dog vaccination coverage was about 40%.",
+    "link": "https://link.springer.com/article/10.1186/s12982-026-01782-9",
+    "year": 2026,
+    "tags": ["Discover Public Health 2026", "Rabies"]
+  },
+  {
+    "title": "Scarlet fever outbreak, Samut Prakan school",
+    "fullTitle": "Investigation of a Scarlet Fever Outbreak in a Primary School, Samut Prakan Province, Thailand, January – March 2025",
+    "type": "Research",
+    "description": "93 cases (5.1% attack rate), spread person to person, helped by crowded classrooms and poor ventilation. Control measures stopped transmission.",
+    "link": "https://he04.tci-thaijo.org/index.php/JDHh/article/view/3866/2786",
+    "year": 2026,
+    "tags": ["JDH 2026", "Scarlet fever"]
+  }
+]
