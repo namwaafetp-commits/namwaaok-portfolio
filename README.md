@@ -11,7 +11,7 @@ Portfolio of **Waritnun Anupat, MD**: a doctor in the Field Epidemiology Trainin
 | Section | What it shows |
 |---|---|
 | **Hero** | Three rows of kinetic type that speed up as you scroll, after a short loading counter. |
-| **About** | Portrait, bio, project counter, toolkit (AI tools, Python, R, data analytics, video editing), social links and a "Latest" tile. |
+| **About** | Portrait, bio, project counter, toolkit (AI tools, Python, R, data analytics, video editing), contact links, a "Latest" tile, and YouTube and TikTok tiles that describe each channel in Thai or English depending on the visitor's browser language. |
 | **Work** | A bento grid of apps, a video and three first-author papers, with filter tabs (All, App, Video, Research). Video tiles play in a pop-up player. |
 | **Collaborate** | One-click, pre-filled emails for health apps, outbreak and epi tools, agentic AI, research, simple websites, and job opportunities. |
 
@@ -50,7 +50,8 @@ Then open http://localhost:8080. On Windows you can also double-click `start.bat
 
 ## Edit the content
 
-- `data/site.json`: name, tagline, hero line, bio, skills, photo, email, which project is "Latest", social links and the collaboration cards.
+- `data/site.json`: name, tagline, hero line, bio, skills, photo, email, which project is "Latest", social links, the YouTube/TikTok channel descriptions (`channels`, each with `en` and `th` text) and the collaboration cards.
+- Add `?lang=th` or `?lang=en` to the URL to preview the Thai or English text.
 - `data/projects.json`: one block per project, video or paper. Required: `title`, `type`, and `link` (or `video`). Optional: `description`, `year`, `featured`, `tags`, `image`, `imageFit`, `imagePos`, `coverColor`, `logo`, `poster`, `fullTitle`.
 
 A new `type` automatically gets its own filter tab and colour.

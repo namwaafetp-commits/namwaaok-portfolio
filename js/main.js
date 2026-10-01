@@ -24,6 +24,15 @@ function h(tag, attrs = {}, ...kids) {
 const safeUrl = (u) => (/^(https?:|mailto:|assets\/|\.\/|\/)/i.test(u || '') ? u : '');
 const cap = (s) => s.charAt(0).toUpperCase() + s.slice(1);
 
+// Thai for visitors whose browser prefers Thai, English otherwise. ?lang=th or ?lang=en overrides (handy for previews).
+const uiLang = (() => {
+  const forced = new URLSearchParams(window.location.search).get('lang');
+  if (forced === 'th' || forced === 'en') return forced;
+  const prefs = navigator.languages && navigator.languages.length ? navigator.languages : [navigator.language || ''];
+  return prefs.some((l) => /^th/i.test(l)) ? 'th' : 'en';
+})();
+const tr = (obj) => (obj && (obj[uiLang] || obj.en)) || '';
+
 // Email first, then each social from site.json. One list feeds both the About tile and the footer.
 function contactLinks(site) {
   const links = [];
@@ -109,6 +118,18 @@ function renderAbout(site, projects) {
     grid.append(h('div', { class: 'tile t-social reveal' },
       h('span', { class: 'label', text: 'Find me' }),
       links.map((l) => linkEl(l, {}, h('span', { class: 'ext', 'aria-hidden': 'true', text: '↗' })))));
+  }
+
+  for (const ch of site.channels || []) {
+    const url = safeUrl((site.socials || {})[ch.social]);
+    if (!url) continue;
+    const label = SOCIAL_LABELS[ch.social] || cap(ch.social);
+    const ico = icon(ch.social);
+    grid.append(h('a', { class: 'tile t-channel reveal', href: url, target: '_blank', rel: 'noopener noreferrer', lang: uiLang },
+      h('div', { class: 'ch-head' }, ico, h('span', { class: 'ch-name', text: label }), h('span', { class: 'ext', 'aria-hidden': 'true', text: '↗' })),
+      h('span', { class: 'label', text: tr(ch.label) }),
+      h('p', { text: tr(ch.text) }),
+      h('span', { class: 'go', text: tr(ch.cta) })));
   }
 
   if ((site.skills || []).length) {

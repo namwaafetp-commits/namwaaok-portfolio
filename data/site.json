@@ -18,6 +18,38 @@
     "youtube": "https://www.youtube.com/channel/UCqHf52I0w3vtbhtkLtqmIcQ",
     "tiktok": "https://www.tiktok.com/@namwaaokok"
   },
+  "channels": [
+    {
+      "social": "youtube",
+      "label": {
+        "en": "Full videos",
+        "th": "วิดีโอเต็ม"
+      },
+      "text": {
+        "en": "Evidence-based health explained simply: chronic conditions, test results and medicines, and health myths checked against the evidence. New videos every week. In Thai.",
+        "th": "สรุปสุขภาพให้เข้าใจง่ายด้วยหลักฐานทางการแพทย์ ทั้งโรคประจำตัว ผลตรวจและยา และแกะความเชื่อผิดๆ อัปเดตวิดีโอใหม่ทุกสัปดาห์"
+      },
+      "cta": {
+        "en": "Watch on YouTube",
+        "th": "ดูบน YouTube"
+      }
+    },
+    {
+      "social": "tiktok",
+      "label": {
+        "en": "Short clips · 60–90 sec",
+        "th": "คลิปสั้น 60–90 วินาที"
+      },
+      "text": {
+        "en": "The same topics as quick, easy-to-follow summaries. In Thai.",
+        "th": "หัวข้อเดียวกันในรูปแบบสรุปสั้นๆ ดูง่าย ทำตามได้"
+      },
+      "cta": {
+        "en": "Watch on TikTok",
+        "th": "ดูบน TikTok"
+      }
+    }
+  ],
   "collab": {
     "intro": "I'm looking for people to build and research with, and I'm open to job opportunities. Pick the one closest to you and send a short note.",
     "topics": [

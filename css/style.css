@@ -163,6 +163,20 @@ button.t-latest { text-align: left; cursor: pointer; width: 100%; }
   .t-photo { height: 420px; }
 }
 
+
+/* Channel tiles (YouTube / TikTok), two across */
+.t-channel { grid-column: span 2; display: flex; flex-direction: column; gap: 6px; }
+.t-channel .ch-head { display: flex; align-items: center; gap: 12px; margin-bottom: 8px; }
+.t-channel .ch-head .ico { width: 1.6em; height: 1.6em; }
+.t-channel .ch-name { font: 400 clamp(1.7rem, 2.6vw, 2.3rem)/1 var(--display); text-transform: uppercase; }
+.t-channel .ext { margin-left: auto; color: var(--mute); transition: color .2s, transform .3s var(--ease); }
+.t-channel:hover .ext { color: var(--lime); transform: translate(2px, -2px); }
+.t-channel .label { margin: 0; color: var(--lime); }
+.t-channel p { margin: 4px 0 8px; max-width: 58ch; color: #cfcfc8; line-height: 1.55; }
+.t-channel .go { margin-top: auto; font: 500 11px var(--mono); letter-spacing: .16em; text-transform: uppercase; color: var(--lime); }
+[lang="th"] .label, [lang="th"] .go { letter-spacing: 0; text-transform: none; font-size: 13px; }
+@media (max-width: 520px) { .t-channel { grid-column: auto; } }
+
 /* ============ Filter tabs ============ */
 .tabs { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 20px; }
 .tabs[hidden] { display: none; }
