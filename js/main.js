@@ -176,6 +176,49 @@ function renderAbout(site, projects) {
   }
 }
 
+/* ---------- Silent preview loops on video tiles ----------
+   A few-second muted clip gives the tile life, but it must cost nothing until it is actually wanted:
+   no src (so no download) until hover or scroll-into-view, never with reduced motion or data saver,
+   and paused again as soon as the tile is left or scrolled away. */
+const previewsAllowed = () => {
+  if (navigator.connection && navigator.connection.saveData) return false;
+  if (new URLSearchParams(window.location.search).get('motion') === 'on') return true; // same preview override as the animations
+  return !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+};
+
+let previewObserver = null;
+const touchOnly = () => window.matchMedia('(hover: none)').matches;
+
+function setPreview(video, on) {
+  if (on) {
+    if (!video.getAttribute('src')) video.src = video.dataset.src; // first use: this is the only download
+    video.play().then(() => video.classList.add('on')).catch(() => {});
+  } else {
+    video.pause();
+    video.classList.remove('on');
+  }
+}
+
+function wirePreview(tile, cover, src) {
+  if (!previewsAllowed()) return;
+  const video = h('video', { class: 'cover-loop', muted: true, loop: true, playsinline: true, preload: 'none', 'aria-hidden': 'true', tabindex: '-1', 'data-src': safeUrl(src) });
+  video.muted = true; // the attribute alone is not enough for autoplay policies in every browser
+  cover.append(video);
+  if (touchOnly()) {
+    if (!previewObserver && 'IntersectionObserver' in window) {
+      previewObserver = new IntersectionObserver((entries) => {
+        for (const e of entries) setPreview(e.target._loop, e.isIntersecting && e.intersectionRatio >= 0.6);
+      }, { threshold: [0, 0.6] });
+    }
+    if (previewObserver) { tile._loop = video; previewObserver.observe(tile); }
+  } else {
+    tile.addEventListener('mouseenter', () => setPreview(video, true));
+    tile.addEventListener('mouseleave', () => setPreview(video, false));
+    tile.addEventListener('focusin', () => setPreview(video, true));
+    tile.addEventListener('focusout', () => setPreview(video, false));
+  }
+}
+
 /* ---------- Work ---------- */
 function projectTile(p) {
   const title = tr(p.title);
@@ -183,17 +226,19 @@ function projectTile(p) {
   const url = safeUrl(p.link);
   const hasVideo = !!p.video;
   const tile = h('article', {
-    class: `tile project reveal${p.featured ? ' featured' : ''}${hasVideo ? ' tall' : ''}`,
+    class: `tile project reveal${p.featured ? ' featured' : ''}${p.tall ? ' tall' : ''}${p.wide ? ' wide' : ''}`,
     'data-type': p.type,
   });
 
-  tile.append(coverFor({ ...p, title: en(p.title) })); // covers stay keyed to the English title, so they never change with language
+  const cover = coverFor({ ...p, title: en(p.title) }); // covers stay keyed to the English title, so they never change with language
+  tile.append(cover);
+  if (hasVideo && safeUrl(p.preview)) wirePreview(tile, cover, p.preview);
   if (p.image || p.poster) tile.append(h('div', { class: 'scrim' }));
 
   if (hasVideo) {
     const btn = h('button', { class: 'project-link', type: 'button', 'aria-label': t('playAria', { title }) });
     btn.addEventListener('click', () => openModal(p));
-    tile.append(btn, h('span', { class: 'play', 'aria-hidden': 'true', text: '▶' }));
+    tile.append(btn);
   } else if (url) {
     tile.append(h('a', {
       class: 'project-link', href: url, target: '_blank', rel: 'noopener noreferrer',
@@ -202,7 +247,7 @@ function projectTile(p) {
     }));
   }
 
-  const corner = hasVideo ? null
+  const corner = hasVideo ? h('span', { class: 'arrow arrow-play', 'aria-hidden': 'true', text: '▶' })
     : url ? h('span', { class: 'arrow', 'aria-hidden': 'true', text: '↗' })
     : h('span', { class: 'badge', text: t('badgePrivate') });
 
@@ -224,6 +269,7 @@ function projectTile(p) {
 function renderWork(projects) {
   const grid = $('#work-grid');
   const tabs = $('#tabs');
+  if (previewObserver) previewObserver.disconnect();
   grid.replaceChildren(...projects.map(projectTile));
 
   const types = [...new Set(projects.map((p) => p.type))];

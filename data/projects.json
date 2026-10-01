@@ -33,6 +33,48 @@
     "tags": [
       "Animation",
       "Health"
+    ],
+    "preview": "assets/video/leptospirosis-loop.mp4",
+    "imagePos": "50% 30%"
+  },
+  {
+    "title": {
+      "en": "Antibiotics aren’t “anti-inflammatories”",
+      "th": "ยาปฏิชีวนะ ไม่ใช่ยาแก้อักเสบ"
+    },
+    "type": "Video",
+    "description": {
+      "en": "Why a sore throat doesn’t need antibiotics: most are viral and clear in 7–10 days, and unnecessary antibiotics feed drug resistance. In Thai.",
+      "th": "ทำไมเจ็บคอไม่ต้องกินยาปฏิชีวนะเสมอไป: ส่วนใหญ่เกิดจากไวรัสและหายเองได้ราว 7–10 วัน การใช้ยาปฏิชีวนะโดยไม่จำเป็นทำให้เชื้อดื้อยา"
+    },
+    "video": "assets/video/antibiotics.mp4",
+    "poster": "assets/video/antibiotics.jpg",
+    "preview": "assets/video/antibiotics-loop.mp4",
+    "imagePos": "50% 30%",
+    "year": 2026,
+    "tags": [
+      "Antibiotics",
+      "Animation"
+    ]
+  },
+  {
+    "title": {
+      "en": "“Sweet blood”? Why mosquitoes pick you",
+      "th": "เลือดหวาน? ยุงเลือกกัดเราเพราะอะไร"
+    },
+    "type": "Video",
+    "description": {
+      "en": "Mosquitoes choose by breath (CO₂), colour and heat, and skin odour, which can differ about 100× between people. Plus how to prevent bites. In Thai.",
+      "th": "ยุงเลือกกัดจากลมหายใจ (CO₂) สีและความร้อน และกลิ่นผิว ซึ่งดึงดูดยุงต่างกันได้ราว 100 เท่า พร้อมวิธีป้องกันยุงกัด"
+    },
+    "video": "assets/video/mosquito.mp4",
+    "poster": "assets/video/mosquito.jpg",
+    "preview": "assets/video/mosquito-loop.mp4",
+    "imagePos": "50% 30%",
+    "year": 2026,
+    "tags": [
+      "Mosquitoes",
+      "Animation"
     ]
   },
   {
@@ -85,7 +127,8 @@
     "tags": [
       "Windows",
       "PowerPoint"
-    ]
+    ],
+    "wide": true
   },
   {
     "title": {
@@ -139,6 +182,7 @@
     "tags": [
       "JDH 2026",
       "Scarlet fever"
-    ]
+    ],
+    "wide": true
   }
 ]

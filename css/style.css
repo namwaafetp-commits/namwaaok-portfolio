@@ -200,6 +200,7 @@ button.t-latest { text-align: left; cursor: pointer; width: 100%; }
 .project[hidden] { display: none; }
 .project.featured { grid-column: span 2; grid-row: span 2; }
 .project.tall { grid-row: span 2; }
+.project.wide { grid-column: span 2; }
 .project-link { position: absolute; inset: 0; display: block; width: 100%; padding: 0; border: 0; background: none; text-align: left; color: inherit; cursor: pointer; }
 .project-link:focus-visible { outline: 2px solid var(--lime); outline-offset: -4px; border-radius: var(--r); }
 
@@ -223,6 +224,8 @@ button.t-latest { text-align: left; cursor: pointer; width: 100%; }
 .cover-img { background-size: cover; background-position: center; background-repeat: no-repeat; }
 .cover-contain { background-size: auto 64%; background-position: 50% 12%; }
 .cover-img::before, .cover-img::after { display: none; }
+.cover-loop { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transition: opacity .5s; pointer-events: none; }
+.cover-loop.on { opacity: 1; }
 .scrim { position: absolute; inset: 0; background: linear-gradient(to top, rgba(10, 10, 10, .97) 0%, rgba(10, 10, 10, .9) 34%, rgba(10, 10, 10, .5) 56%, rgba(10, 10, 10, 0) 80%); pointer-events: none; }
 
 .p-in { position: absolute; inset: 0; z-index: 2; padding: 20px; display: flex; flex-direction: column; justify-content: space-between; pointer-events: none; }
@@ -233,6 +236,8 @@ button.t-latest { text-align: left; cursor: pointer; width: 100%; }
 .badge { font: 500 10px var(--mono); letter-spacing: .14em; text-transform: uppercase; padding: 6px 11px; border-radius: 99px; background: rgba(255, 255, 255, .08); border: 1px dashed rgba(255, 255, 255, .3); color: #d6d6d0; }
 .arrow { display: grid; place-items: center; width: 40px; height: 40px; border-radius: 50%; background: var(--lime); color: #000; font-size: 1.15rem; transition: transform .45s var(--ease); }
 .project:hover .arrow { transform: rotate(45deg) scale(1.1); }
+.arrow-play { padding-left: 3px; font-size: .95rem; }
+.project:hover .arrow-play { transform: scale(1.12); }
 .p-bottom h3 { margin: 0; font: 700 clamp(1.4rem, 2.2vw, 1.9rem)/1.05 var(--body); letter-spacing: -.01em; }
 .project.featured .p-bottom h3 { font: 400 clamp(2.6rem, 5.2vw, 4.8rem)/.95 var(--display); text-transform: uppercase; letter-spacing: 0; }
 .p-bottom p { margin: 8px 0 0; max-width: 40ch; color: #cfcfc8; font-size: .95rem; line-height: 1.4; }
@@ -254,6 +259,7 @@ button.t-latest { text-align: left; cursor: pointer; width: 100%; }
 @media (max-width: 600px) {
   .work-grid { grid-template-columns: 1fr; grid-auto-rows: auto; }
   .project { min-height: 280px; }
+  .project.wide { grid-column: auto; }
   .project.featured { grid-column: auto; grid-row: auto; min-height: 400px; }
   .project.tall { grid-column: auto; grid-row: auto; min-height: 520px; }
   .project.featured .p-bottom h3 { font-size: clamp(2.4rem, 12vw, 3.4rem); }

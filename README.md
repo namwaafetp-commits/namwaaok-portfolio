@@ -12,7 +12,7 @@ Portfolio of **Waritnun Anupat, MD**: a doctor in the Field Epidemiology Trainin
 |---|---|
 | **Hero** | Three rows of kinetic type that speed up as you scroll, after a short loading counter. |
 | **About** | Portrait, bio, project counter, toolkit (AI tools, Python, R, data analytics, video editing), contact links, a "Latest" tile, and YouTube and TikTok tiles that describe each channel. |
-| **Work** | A bento grid of apps, a video and three first-author papers, with filter tabs (All, App, Video, Research). Video tiles play in a pop-up player. |
+| **Work** | A bento grid of apps, three animated explainer videos and three first-author papers, with filter tabs (All, App, Video, Research). Video tiles loop a silent preview on hover and play the full video in a pop-up player. |
 | **Collaborate** | One-click, pre-filled emails for health apps, outbreak and epi tools, agentic AI, research, simple websites, and job opportunities. |
 
 ![About section with portrait, bio, toolkit and links](assets/readme/about.jpg)
@@ -28,6 +28,7 @@ Portfolio of **Waritnun Anupat, MD**: a doctor in the Field Epidemiology Trainin
 - **Episignal**: open global outbreak intelligence with every event linked to its source.
 - **MantaSlide**: control PowerPoint from your phone over Wi-Fi.
 - **Research**: norovirus (OSIR 2025), human rabies deaths (Discover Public Health 2026) and scarlet fever (JDH 2026) outbreak investigations.
+- **Animations** (in Thai): leptospirosis and flood water, why a sore throat doesn't need antibiotics, and why mosquitoes pick some people.
 
 ## Tech
 
@@ -40,6 +41,27 @@ Good to know:
 - Respects the OS "reduce motion" setting (marquees stay still, reveals become simple fades). Add `?motion=on` to the URL to preview the full animation anyway.
 - If GSAP fails to load, the page still shows all content. If the data files fail to load, visitors see a friendly fallback with a YouTube link.
 - Layout adapts from phone to desktop.
+
+## Performance and video
+
+The first load is about 0.8 MB (images plus code). Videos never load on their own:
+
+- Each video tile shows a small poster image. The full video (`preload="none"`, about 4-5 MB) downloads only when someone clicks play, and starts playing before it has fully downloaded (`faststart`).
+- Each tile can also have a 4-second silent preview loop (60-150 KB, 480 px wide). It has no `src` until the visitor hovers the tile (or, on touch screens, scrolls it into view), pauses when they leave, and is skipped entirely for "reduce motion" and data-saver users.
+- Files under `assets/` are cached by the browser for a day (see `vercel.json`).
+
+To add a video, put the files in `assets/video/` and add an entry to `data/projects.json` with `"type": "Video"`, `video`, `poster` and optionally `preview`. Make them with ffmpeg:
+
+```bash
+# full video: 720 px, quick start, light audio
+ffmpeg -i source.mp4 -vf scale=720:-2 -c:v libx264 -crf 28 -c:a aac -b:a 64k -movflags +faststart name.mp4
+# poster frame
+ffmpeg -ss 1 -i name.mp4 -frames:v 1 -q:v 4 name.jpg
+# 4-second silent preview loop
+ffmpeg -ss 1 -t 4 -i name.mp4 -an -vf scale=480:-2,fps=24 -c:v libx264 -crf 31 -pix_fmt yuv420p -movflags +faststart name-loop.mp4
+```
+
+For long videos, link to YouTube instead of hosting the file, to stay within Vercel's bandwidth limits.
 
 ## Run locally
 
@@ -58,7 +80,7 @@ Then open http://localhost:8080. On Windows you can also double-click `start.bat
 ## Language
 
 The page opens in Thai if the visitor's browser prefers Thai, otherwise English. The EN | ไทย switch overrides that and is remembered in the browser. Adding `?lang=th` or `?lang=en` to the URL forces a language, which is handy for previews.
-- `data/projects.json`: one block per project, video or paper. Required: `title`, `type`, and `link` (or `video`). Optional: `description`, `year`, `featured`, `tags`, `image`, `imageFit`, `imagePos`, `coverColor`, `logo`, `poster`, `fullTitle`.
+- `data/projects.json`: one block per project, video or paper. Required: `title`, `type`, and `link` (or `video`). Optional: `description`, `year`, `featured`, `tall`, `wide`, `tags`, `image`, `imageFit`, `imagePos`, `coverColor`, `logo`, `poster`, `preview`, `fullTitle`. `featured` makes a 2x2 tile, `wide` a 2x1 tile.
 
 A new `type` automatically gets its own filter tab and colour.
 
