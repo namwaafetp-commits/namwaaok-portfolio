@@ -3,21 +3,23 @@
   "fullName": "Waritnun Anupat, MD",
   "tagline": "Where medicine meets code",
   "heroLine": "Doctor · Builder · Disease detective",
-  "bio": "Waritnun Anupat, MD: a doctor in the Field Epidemiology Training Program (FETP), Bangkok. I build health apps and explore agentic AI and automation. If you share these interests, get in touch.",
+  "bio": "Waritnun Anupat, MD: a doctor in the Field Epidemiology Training Program (FETP), Bangkok. I build health apps, analyse data and explore agentic AI and automation. If you share these interests, get in touch.",
   "skills": [
     "AI tools",
     "Python",
     "R",
+    "Data analytics",
     "Video editing"
   ],
   "photo": "assets/img/portrait.jpg",
+  "latest": "MantaSlide",
   "email": "anupatwritnun@gmail.com",
   "socials": {
     "youtube": "https://www.youtube.com/channel/UCqHf52I0w3vtbhtkLtqmIcQ",
     "tiktok": "https://www.tiktok.com/@namwaaokok"
   },
   "collab": {
-    "intro": "I'm looking for people to build and research with. If one of these is your area, send a short note about what you're working on.",
+    "intro": "I'm looking for people to build and research with, and I'm open to job opportunities. Pick the one closest to you and send a short note.",
     "topics": [
       {
         "title": "Health apps",
@@ -29,11 +31,24 @@
       },
       {
         "title": "Agentic AI & automation",
-        "text": "AI agents and workflows for health work."
+        "text": "AI agents and workflows for health work.",
+        "line": "I'd like to collaborate on agentic AI and automation."
       },
       {
         "title": "Research",
         "text": "Field investigations and public health studies."
+      },
+      {
+        "title": "Websites",
+        "text": "Simple websites, built and deployed for you.",
+        "subject": "Website project",
+        "line": "I'd like help building and deploying a simple website."
+      },
+      {
+        "title": "Job opportunities",
+        "text": "Open to roles in health tech, public health and data.",
+        "subject": "Job opportunity",
+        "line": "I'd like to talk about a job opportunity."
       }
     ]
   }

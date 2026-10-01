@@ -247,7 +247,7 @@ button.t-latest { text-align: left; cursor: pointer; width: 100%; }
 .foot-note { margin: 56px var(--pad) 0; text-align: center; font: 500 11px var(--mono); letter-spacing: .18em; text-transform: uppercase; color: var(--mute); }
 
 /* Collaboration cards */
-.collab { display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--gap); margin: 40px max(var(--pad), calc((100vw - 1280px) / 2)) 0; }
+.collab { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--gap); margin: 40px max(var(--pad), calc((100vw - 1280px) / 2)) 0; }
 .collab:empty { display: none; }
 .collab-intro { grid-column: 1 / -1; margin: 0; max-width: 62ch; font-size: clamp(1.05rem, 1.6vw, 1.3rem); color: #cfcfc8; }
 .collab-card { display: flex; flex-direction: column; justify-content: space-between; gap: 28px; min-height: 190px; padding: 22px; background: var(--panel); border: 1px solid var(--line); border-radius: var(--r); transition: transform .4s var(--ease), border-color .3s, background .3s; }

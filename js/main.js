@@ -76,9 +76,10 @@ function renderHeroLine(text) {
 }
 
 /* ---------- About ---------- */
-function latestProject(projects) {
-  // Highest year wins; ties keep file order (so put newest first in projects.json).
-  return [...projects].sort((a, b) => (b.year || 0) - (a.year || 0))[0];
+function latestProject(projects, site) {
+  // site.latest (a project title) wins; otherwise highest year, ties keep file order.
+  const picked = site.latest && projects.find((p) => p.title === site.latest);
+  return picked || [...projects].sort((a, b) => (b.year || 0) - (a.year || 0))[0];
 }
 
 function renderAbout(site, projects) {
@@ -116,7 +117,7 @@ function renderAbout(site, projects) {
       h('div', { class: 'pills' }, site.skills.map((s) => h('span', { class: 'pill', text: s })))));
   }
 
-  const latest = latestProject(projects);
+  const latest = latestProject(projects, site);
   if (latest) {
     const url = safeUrl(latest.link);
     const inner = [
@@ -222,12 +223,12 @@ function renderCollab(site) {
     box.append(site.email
       ? h('a', {
         class: 'collab-card reveal',
-        href: mailto(site.email, `Collaboration: ${t.title}`,
+        href: mailto(site.email, t.subject || `Collaboration: ${t.title}`,
           `Hi ${(site.fullName || site.name || '').split(/[ ,]/)[0]},
 
-I'd like to collaborate on ${t.title.toLowerCase()}.
+${t.line || `I'd like to collaborate on ${t.title.toLowerCase()}.`}
 
-What I'm working on:
+A bit about me / what I'm working on:
 `),
       }, inner)
       : h('div', { class: 'collab-card reveal' }, inner));
