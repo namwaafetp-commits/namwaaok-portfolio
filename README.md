@@ -12,7 +12,7 @@ Portfolio of **Waritnun Anupat, MD**: a doctor in the Field Epidemiology Trainin
 |---|---|
 | **Hero** | Three rows of kinetic type that speed up as you scroll, after a short loading counter. |
 | **About** | Portrait, bio, project counter, toolkit (AI tools, Python, R, data analytics, video editing), contact links, a "Latest" tile, and YouTube and TikTok tiles that describe each channel. |
-| **Work** | A bento grid of apps, three animated explainer videos and three first-author papers, with filter tabs (All, App, Video, Research). Video tiles loop a silent preview on hover and play the full video in a pop-up player. |
+| **Work** | A bento grid of apps, one card that holds the three animated explainer videos (arrows, dots, swipe and auto-advance) and three first-author papers, with filter tabs (All, App, Video, Research). Clicking a video opens it in a pop-up player. |
 | **Collaborate** | One-click, pre-filled emails for health apps, outbreak and epi tools, agentic AI, research, simple websites, and job opportunities. |
 
 ![About section with portrait, bio, toolkit and links](assets/readme/about.jpg)
@@ -47,10 +47,10 @@ Good to know:
 The first load is about 0.8 MB (images plus code). Videos never load on their own:
 
 - Each video tile shows a small poster image. The full video (`preload="none"`, about 4-5 MB) downloads only when someone clicks play, and starts playing before it has fully downloaded (`faststart`).
-- Each tile can also have a 4-second silent preview loop (60-150 KB, 480 px wide). It has no `src` until the visitor hovers the tile (or, on touch screens, scrolls it into view), pauses when they leave, and is skipped entirely for "reduce motion" and data-saver users.
+- Each video can also have a 4-second silent preview loop (60-150 KB, 480 px wide). The carousel plays the loop of the slide that is showing; it has no `src` until the card is on screen, pauses when it is scrolled away or the tab is hidden, and is skipped entirely (as is auto-advance) for "reduce motion" and data-saver users. A single standalone video tile loops on hover instead.
 - Files under `assets/` are cached by the browser for a day (see `vercel.json`).
 
-To add a video, put the files in `assets/video/` and add an entry to `data/projects.json` with `"type": "Video"`, `video`, `poster` and optionally `preview`. Make them with ffmpeg:
+All projects with a `video` are grouped into one carousel card automatically (it sits where the first video is listed); the slide order follows `data/projects.json`. To add a video, put the files in `assets/video/` and add an entry to `data/projects.json` with `"type": "Video"`, `video`, `poster` and optionally `preview`. Make them with ffmpeg:
 
 ```bash
 # full video: 720 px, quick start, light audio

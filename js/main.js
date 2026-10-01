@@ -26,7 +26,7 @@ const safeUrl = (u) => (/^(https?:|mailto:|assets\/|\.\/|\/)/i.test(u || '') ? u
 const cap = (s) => s.charAt(0).toUpperCase() + s.slice(1);
 
 // Everything the renderers need; a language switch re-renders from this without refetching.
-const state = { site: null, projects: [], filter: 'All' };
+const state = { site: null, projects: [], filter: 'All', slide: 0 };
 
 async function loadJSON(path) {
   const res = await fetch(path, { cache: 'no-cache' });
@@ -199,10 +199,15 @@ function setPreview(video, on) {
   }
 }
 
-function wirePreview(tile, cover, src) {
-  if (!previewsAllowed()) return;
+function makeLoop(src) {
   const video = h('video', { class: 'cover-loop', muted: true, loop: true, playsinline: true, preload: 'none', 'aria-hidden': 'true', tabindex: '-1', 'data-src': safeUrl(src) });
   video.muted = true; // the attribute alone is not enough for autoplay policies in every browser
+  return video;
+}
+
+function wirePreview(tile, cover, src) {
+  if (!previewsAllowed()) return;
+  const video = makeLoop(src);
   cover.append(video);
   if (touchOnly()) {
     if (!previewObserver && 'IntersectionObserver' in window) {
@@ -219,8 +224,117 @@ function wirePreview(tile, cover, src) {
   }
 }
 
+/* ---------- Video carousel: all videos in one card ---------- */
+let carouselTimer = null;
+let carouselObserver = null;
+let carouselSync = () => {};
+document.addEventListener('visibilitychange', () => carouselSync());
+
+function stopCarousel() {
+  clearInterval(carouselTimer);
+  carouselTimer = null;
+  if (carouselObserver) carouselObserver.disconnect();
+  carouselObserver = null;
+  carouselSync = () => {};
+}
+
+function carouselTile(videos) {
+  const total = videos.length;
+  const tile = h('article', {
+    class: 'tile project reveal tall carousel', 'data-type': 'Video',
+    role: 'region', 'aria-roledescription': 'carousel', 'aria-label': t('carouselLabel'),
+  });
+
+  // Each slide is an ordinary project tile with the tile chrome removed, so covers, titles and the play link stay identical.
+  const slides = videos.map((p, i) => {
+    const s = projectTile(p, { preview: false });
+    s.className = 'slide';
+    s.removeAttribute('data-type');
+    s.setAttribute('role', 'group');
+    s.setAttribute('aria-roledescription', 'slide');
+    s.setAttribute('aria-label', t('slideOf', { n: i + 1, total }));
+    if (safeUrl(p.preview)) { s._loop = makeLoop(p.preview); s.querySelector('.cover').append(s._loop); }
+    tile.append(s);
+    return s;
+  });
+
+  const prev = h('button', { class: 'c-btn c-prev', type: 'button', 'aria-label': t('prevVideo'), text: '‹' });
+  const next = h('button', { class: 'c-btn c-next', type: 'button', 'aria-label': t('nextVideo'), text: '›' });
+  const dots = videos.map((_, i) => h('button', { class: 'c-dot', type: 'button', 'aria-label': t('slideOf', { n: i + 1, total }) }));
+  tile.append(prev, next, h('div', { class: 'c-dots' }, dots));
+
+  const motionOk = previewsAllowed(); // same rule as the hover previews: no auto-advance or moving loops for reduce-motion / data saver
+  let index = Math.min(state.slide || 0, total - 1);
+  let visible = false;
+  let hovering = false;
+  let lastTouch = 0;
+
+  const syncLoops = () => {
+    slides.forEach((s, k) => {
+      if (s._loop) setPreview(s._loop, motionOk && visible && !document.hidden && k === index);
+    });
+  };
+
+  const show = (i, byUser) => {
+    index = (i + total) % total;
+    state.slide = index;
+    if (byUser) lastTouch = Date.now();
+    slides.forEach((s, k) => {
+      const on = k === index;
+      s.classList.toggle('active', on);
+      s.inert = !on;
+      s.setAttribute('aria-hidden', String(!on));
+      dots[k].classList.toggle('on', on);
+      dots[k].setAttribute('aria-current', String(on));
+    });
+    syncLoops();
+  };
+
+  prev.addEventListener('click', () => show(index - 1, true));
+  next.addEventListener('click', () => show(index + 1, true));
+  dots.forEach((d, i) => d.addEventListener('click', () => show(i, true)));
+  tile.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowLeft') { show(index - 1, true); e.preventDefault(); }
+    if (e.key === 'ArrowRight') { show(index + 1, true); e.preventDefault(); }
+  });
+  tile.addEventListener('mouseenter', () => { hovering = true; });
+  tile.addEventListener('mouseleave', () => { hovering = false; });
+  tile.addEventListener('focusin', () => { hovering = true; });
+  tile.addEventListener('focusout', () => { hovering = false; });
+
+  let x0 = null;
+  tile.addEventListener('touchstart', (e) => { x0 = e.touches[0].clientX; lastTouch = Date.now(); }, { passive: true });
+  tile.addEventListener('touchend', (e) => {
+    if (x0 == null) return;
+    const dx = e.changedTouches[0].clientX - x0;
+    x0 = null;
+    if (Math.abs(dx) > 45) show(index + (dx < 0 ? 1 : -1), true);
+  }, { passive: true });
+
+  carouselSync = syncLoops;
+  if ('IntersectionObserver' in window) {
+    carouselObserver = new IntersectionObserver((entries) => {
+      visible = entries.some((e) => e.isIntersecting);
+      syncLoops();
+    }, { threshold: 0.35 });
+    carouselObserver.observe(tile);
+  } else {
+    visible = true;
+  }
+
+  if (motionOk && total > 1) {
+    carouselTimer = setInterval(() => {
+      // never advance while someone is looking at / using it, off-screen, in another tab, or while the player is open
+      if (visible && !hovering && !document.hidden && modal.hidden && Date.now() - lastTouch > 5000) show(index + 1, false);
+    }, 7000);
+  }
+
+  show(index, false);
+  return tile;
+}
+
 /* ---------- Work ---------- */
-function projectTile(p) {
+function projectTile(p, opts = {}) {
   const title = tr(p.title);
   const fullTitle = p.fullTitle ? tr(p.fullTitle) : '';
   const url = safeUrl(p.link);
@@ -232,7 +346,7 @@ function projectTile(p) {
 
   const cover = coverFor({ ...p, title: en(p.title) }); // covers stay keyed to the English title, so they never change with language
   tile.append(cover);
-  if (hasVideo && safeUrl(p.preview)) wirePreview(tile, cover, p.preview);
+  if (opts.preview !== false && hasVideo && safeUrl(p.preview)) wirePreview(tile, cover, p.preview);
   if (p.image || p.poster) tile.append(h('div', { class: 'scrim' }));
 
   if (hasVideo) {
@@ -270,7 +384,19 @@ function renderWork(projects) {
   const grid = $('#work-grid');
   const tabs = $('#tabs');
   if (previewObserver) previewObserver.disconnect();
-  grid.replaceChildren(...projects.map(projectTile));
+  stopCarousel();
+  // Two or more videos share one carousel card, placed where the first video sits.
+  const videos = projects.filter((p) => p.video);
+  const tiles = [];
+  let carouselAdded = false;
+  for (const p of projects) {
+    if (p.video && videos.length > 1) {
+      if (!carouselAdded) { tiles.push(carouselTile(videos)); carouselAdded = true; }
+      continue;
+    }
+    tiles.push(projectTile(p));
+  }
+  grid.replaceChildren(...tiles);
 
   const types = [...new Set(projects.map((p) => p.type))];
   if (!types.includes(state.filter)) state.filter = 'All';
