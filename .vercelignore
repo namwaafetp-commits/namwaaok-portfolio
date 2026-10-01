@@ -1,0 +1,8 @@
+# keep local-only material out of the public deployment
+docs
+.superpowers
+ChatGPT Image*.png
+_test-*.html
+start.bat
+README.md
+*.log

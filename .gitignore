@@ -4,3 +4,5 @@ docs/
 ChatGPT Image*.png
 _test-*.html
 *.log
+
+.vercel
