@@ -24,6 +24,7 @@ const UI = {
     mailCtaSubject: 'Collaboration', mailCtaLine: 'I’d like to collaborate with you.', mailCtaAbout: 'What I’m working on:',
     loadError: 'Couldn’t load the projects right now.', loadErrorLink: 'Watch my videos on YouTube ↗',
     modalClose: 'Close video', modalDialog: 'Video player', portrait: 'Portrait of {name}',
+    motionPause: 'Pause animations', motionPlay: 'Play animations',
     carouselLabel: 'Animated explainer videos', prevVideo: 'Previous video', nextVideo: 'Next video', slideOf: 'Video {n} of {total}',
   },
   th: {
@@ -48,6 +49,7 @@ const UI = {
     mailCtaSubject: 'ร่วมงานกัน', mailCtaLine: 'สนใจร่วมงานกับคุณ', mailCtaAbout: 'สิ่งที่กำลังทำอยู่:',
     loadError: 'โหลดผลงานไม่สำเร็จในขณะนี้', loadErrorLink: 'ดูวิดีโอของผมบน YouTube ↗',
     modalClose: 'ปิดวิดีโอ', modalDialog: 'เครื่องเล่นวิดีโอ', portrait: 'ภาพถ่ายของ {name}',
+    motionPause: 'หยุดการเคลื่อนไหว', motionPlay: 'เปิดการเคลื่อนไหว',
     carouselLabel: 'วิดีโออนิเมชันให้ความรู้', prevVideo: 'วิดีโอก่อนหน้า', nextVideo: 'วิดีโอถัดไป', slideOf: 'วิดีโอ {n} จาก {total}',
   },
 };

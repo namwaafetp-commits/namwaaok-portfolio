@@ -1,10 +1,10 @@
 // All motion lives here. If GSAP is unavailable the page simply stays static and fully visible.
 
+import { motionOn } from './motion.js';
+
 const root = document.documentElement;
-// Respect the OS "reduce motion" setting. Adding ?motion=on to the URL previews the full animation anyway.
-const forceMotion = new URLSearchParams(window.location.search).get('motion') === 'on';
-if (forceMotion) root.classList.add('force-motion');
-const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches && !forceMotion;
+const reduced = !motionOn; // "reduced" = the visitor (or ?motion=off) paused motion
+root.classList.toggle('motion-off', reduced);
 
 const hasGsap = () => typeof window.gsap !== 'undefined';
 const hasScrollTrigger = () => hasGsap() && typeof window.ScrollTrigger !== 'undefined';

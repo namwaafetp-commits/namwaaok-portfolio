@@ -38,7 +38,7 @@ Good to know:
 
 - Content lives in two JSON files and never touches the code.
 - Bilingual: every visible text exists in English and Thai. The switch re-renders the page instantly and remembers the choice.
-- Respects the OS "reduce motion" setting (marquees stay still, reveals become simple fades). Add `?motion=on` to the URL to preview the full animation anyway.
+- Motion is on by default, even if the visitor's OS has "reduce motion" turned on. A pause button (⏸) in the nav switches every animation, loop and auto-advance off (marquees stay still, reveals become simple fades) and remembers the choice in the browser. `?motion=off` or `?motion=on` in the URL forces either state.
 - If GSAP fails to load, the page still shows all content. If the data files fail to load, visitors see a friendly fallback with a YouTube link.
 - Layout adapts from phone to desktop.
 
@@ -47,7 +47,7 @@ Good to know:
 The first load is about 0.8 MB (images plus code). Videos never load on their own:
 
 - Each video tile shows a small poster image. The full video (`preload="none"`, about 4-5 MB) downloads only when someone clicks play, and starts playing before it has fully downloaded (`faststart`).
-- Each video can also have a 4-second silent preview loop (60-150 KB, 480 px wide). The carousel plays the loop of the slide that is showing; it has no `src` until the card is on screen, pauses when it is scrolled away or the tab is hidden, and is skipped entirely (as is auto-advance) for "reduce motion" and data-saver users. A single standalone video tile loops on hover instead.
+- Each video can also have a 4-second silent preview loop (60-150 KB, 480 px wide). The carousel plays the loop of the slide that is showing; it has no `src` until the card is on screen, pauses when it is scrolled away or the tab is hidden, and is skipped entirely (as is auto-advance) when motion is paused or the visitor uses data saver. A single standalone video tile loops on hover instead.
 - Files under `assets/` are cached by the browser for a day (see `vercel.json`).
 
 All projects with a `video` are grouped into one carousel card automatically (it sits where the first video is listed); the slide order follows `data/projects.json`. To add a video, put the files in `assets/video/` and add an entry to `data/projects.json` with `"type": "Video"`, `video`, `poster` and optionally `preview`. Make them with ffmpeg:

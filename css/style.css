@@ -86,6 +86,11 @@ img, video { display: block; max-width: 100%; }
   .nav-links.open { transform: none; }
 }
 
+/* Motion pause button */
+.motion-btn { position: relative; z-index: 60; width: 36px; height: 36px; display: grid; place-items: center; padding: 0; border: 1px solid var(--line); border-radius: 50%; background: rgba(10, 10, 10, .5); color: var(--ink); font: 400 12px/1 var(--body); cursor: pointer; transition: background .25s, color .25s, border-color .25s; }
+.motion-btn:hover, .motion-btn:focus-visible { background: var(--lime); color: #000; border-color: var(--lime); outline: none; }
+@media (max-width: 700px) { .motion-btn { width: 34px; height: 34px; } }
+
 /* Language switch */
 .nav-right { display: flex; align-items: center; gap: 24px; }
 .lang { position: relative; z-index: 60; display: inline-flex; padding: 3px; border: 1px solid var(--line); border-radius: 99px; background: rgba(10, 10, 10, .5); }
@@ -314,19 +319,17 @@ a.collab-card:focus-visible { outline: 2px solid var(--lime); outline-offset: 3p
 
 .noscript { padding: 24px; color: var(--mute); }
 
-/* ============ Reduced motion ============ */
-@media (prefers-reduced-motion: reduce) {
-  html:not(.force-motion) { scroll-behavior: auto; }
-  html:not(.force-motion) .marquee-track,
-  html:not(.force-motion) .grain,
-  html:not(.force-motion) .cover::before,
-  html:not(.force-motion) .cover::after { animation: none !important; }
-  html:not(.force-motion) .tile,
-  html:not(.force-motion) .cover,
-  html:not(.force-motion) .arrow,
-  html:not(.force-motion) .play,
-  html:not(.force-motion) .carousel .slide { transition: none; }
-}
+/* ============ Motion paused (nav button, ?motion=off) ============ */
+html.motion-off { scroll-behavior: auto; }
+html.motion-off .marquee-track,
+html.motion-off .grain,
+html.motion-off .cover::before,
+html.motion-off .cover::after { animation: none !important; }
+html.motion-off .tile,
+html.motion-off .cover,
+html.motion-off .arrow,
+html.motion-off .play,
+html.motion-off .carousel .slide { transition: none; }
 
 /* ============ Thai typography ============
    Anton has no Thai glyphs, so Thai falls back to Noto Sans Thai. Use its heavy weight, stop faux-bold on Anton,

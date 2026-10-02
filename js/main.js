@@ -2,6 +2,7 @@ import { coverFor } from './covers.js';
 import { icon } from './icons.js';
 import * as anim from './animations.js';
 import { applyStatic, en, getLang, onLangChange, setLang, t, tr } from './i18n.js';
+import { motionOn, setMotion } from './motion.js';
 
 const FALLBACK_YOUTUBE = 'https://www.youtube.com/channel/UCqHf52I0w3vtbhtkLtqmIcQ';
 const SOCIAL_LABELS = { youtube: 'YouTube', tiktok: 'TikTok' };
@@ -61,6 +62,13 @@ function linkEl(link, attrs = {}, ...extra) {
 }
 
 /* ---------- Nav ---------- */
+function setMotionLabel() {
+  const btn = $('#motion-btn');
+  btn.textContent = motionOn ? '⏸' : '▶';
+  btn.setAttribute('aria-label', t(motionOn ? 'motionPause' : 'motionPlay'));
+  btn.title = t(motionOn ? 'motionPause' : 'motionPlay');
+}
+
 function setMenuLabel() {
   const open = $('#nav-links').classList.contains('open');
   $('#menu-btn').textContent = open ? t('close') : t('menu');
@@ -77,6 +85,7 @@ function setupNav() {
   };
   btn.addEventListener('click', () => setOpen(!links.classList.contains('open')));
   links.addEventListener('click', (e) => { if (e.target.closest('a')) setOpen(false); });
+  $('#motion-btn').addEventListener('click', () => setMotion(!motionOn));
   for (const b of document.querySelectorAll('.lang [data-lang]')) {
     b.addEventListener('click', () => setLang(b.dataset.lang));
   }
@@ -180,11 +189,7 @@ function renderAbout(site, projects) {
    A few-second muted clip gives the tile life, but it must cost nothing until it is actually wanted:
    no src (so no download) until hover or scroll-into-view, never with reduced motion or data saver,
    and paused again as soon as the tile is left or scrolled away. */
-const previewsAllowed = () => {
-  if (navigator.connection && navigator.connection.saveData) return false;
-  if (new URLSearchParams(window.location.search).get('motion') === 'on') return true; // same preview override as the animations
-  return !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-};
+const previewsAllowed = () => motionOn && !(navigator.connection && navigator.connection.saveData);
 
 let previewObserver = null;
 const touchOnly = () => window.matchMedia('(hover: none)').matches;
@@ -513,6 +518,7 @@ function renderAll() {
   const { site, projects } = state;
   applyStatic();
   setMenuLabel();
+  setMotionLabel();
   if (!site) { renderFallback(); return; }
   $('#work-count').textContent = String(projects.length);
   renderMarquees(site);
