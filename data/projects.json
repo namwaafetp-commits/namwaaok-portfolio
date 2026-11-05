@@ -18,9 +18,9 @@
     "featured": true,
     "tags": [
       "Track 5 Winner",
-      "Next.js",
+      "MOPH Hackathon",
       "AI Referral",
-      "Digital Health"
+      "Next.js"
     ]
   },
   {
@@ -38,10 +38,10 @@
     "year": 2026,
     "wide": true,
     "tags": [
+      "IRB Approved",
       "AI Vision OCR",
       "LINE OA",
-      "Clinical Trial",
-      "Supabase"
+      "Clinical Trial"
     ]
   },
   {
@@ -64,7 +64,7 @@
       "iOS App",
       "SwiftUI",
       "Local-First",
-      "Privacy"
+      "Health Privacy"
     ]
   },
   {
@@ -81,10 +81,10 @@
     "logo": "assets/projects/epitools-logo.png",
     "year": 2026,
     "tags": [
+      "DDC Surveillance",
+      "Flood Response",
       "Next.js",
-      "Surveillance",
-      "Epidemiology",
-      "Flood Response"
+      "Epidemiology"
     ]
   },
   {
@@ -103,8 +103,8 @@
     "tags": [
       "Python",
       "FastAPI",
-      "MapLibre",
-      "Epidemiology"
+      "Outbreak Intel",
+      "Health GIS"
     ]
   },
   {

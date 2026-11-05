@@ -97,116 +97,116 @@
   ],
   "collab": {
     "intro": {
-      "en": "I'm looking for people to build and research with, and I'm open to job opportunities. Pick the one closest to you and send a short note.",
-      "th": "ผมกำลังมองหาคนที่อยากสร้างและวิจัยไปด้วยกัน และเปิดรับโอกาสในการทำงานด้วยครับ เลือกหัวข้อที่ใกล้เคียงที่สุด แล้วส่งข้อความสั้นๆ มาได้เลย"
+      "en": "Looking for a physician-builder to lead clinical product design, validate healthcare AI, or deploy epidemic surveillance? Choose an area below to connect.",
+      "th": "กำลังมองหาแพทย์นักพัฒนาเพื่อนำการออกแบบผลิตภัณฑ์สุขภาพ ตรวจสอบความถูกต้องของ AI หรือพัฒนาระบบเฝ้าระวังโรคระบาดใช่ไหมครับ? เลือกหัวข้อด้านล่างเพื่อพูดคุยกันได้เลย"
     },
     "topics": [
       {
         "title": {
-          "en": "Health apps",
-          "th": "แอปสุขภาพ"
+          "en": "Clinical Product Advisory",
+          "th": "ที่ปรึกษาผลิตภัณฑ์สุขภาพ"
         },
         "text": {
-          "en": "Tools for patients, clinics and field teams.",
-          "th": "เครื่องมือสำหรับผู้ป่วย คลินิก และทีมภาคสนาม"
+          "en": "Medical leadership for health startups: clinical workflow mapping, physician/nurse UX, and safety specs.",
+          "th": "ร่วมเป็นผู้นำทางการแพทย์สำหรับสตาร์ทอัพ ออกแบบเวิร์กโฟลว์คลินิก และกำหนดมาตรฐานความปลอดภัย"
         },
         "subject": {
-          "en": "Collaboration: Health apps",
-          "th": "ร่วมงาน: แอปสุขภาพ"
+          "en": "Advisory: Clinical Product & Health Tech",
+          "th": "ที่ปรึกษา: ผลิตภัณฑ์สุขภาพและเทคโนโลยีการแพทย์"
         },
         "line": {
-          "en": "I'd like to collaborate on health apps.",
-          "th": "สนใจร่วมงานเรื่องแอปสุขภาพ"
+          "en": "I'd like to discuss clinical product advisory for our health tech project.",
+          "th": "สนใจปรึกษาเรื่องทิศทางผลิตภัณฑ์และเทคโนโลยีสุขภาพ"
         }
       },
       {
         "title": {
-          "en": "Outbreak & epi tools",
-          "th": "เครื่องมือเฝ้าระวังและระบาดวิทยา"
+          "en": "Health Apps & Prototypes",
+          "th": "พัฒนาแอปสุขภาพและต้นแบบ"
         },
         "text": {
-          "en": "Surveillance, investigation and mapping.",
-          "th": "การเฝ้าระวัง สอบสวนโรค และทำแผนที่"
+          "en": "Full-stack web, LINE OA, and native iOS apps built for clinics, remote monitoring, and field teams.",
+          "th": "สร้างแอปเว็บ LINE OA และ iOS สำหรับคลินิก การติดตามผู้ป่วยทางไกล และทีมภาคสนาม"
         },
         "subject": {
-          "en": "Collaboration: Outbreak & epi tools",
-          "th": "ร่วมงาน: เครื่องมือเฝ้าระวังและระบาดวิทยา"
+          "en": "Collaboration: Health Apps & Prototypes",
+          "th": "ร่วมงาน: พัฒนาแอปสุขภาพและต้นแบบดิจิทัล"
         },
         "line": {
-          "en": "I'd like to collaborate on outbreak and epi tools.",
-          "th": "สนใจร่วมงานเรื่องเครื่องมือเฝ้าระวังและระบาดวิทยา"
+          "en": "I'd like to collaborate on building a digital health tool or prototype.",
+          "th": "สนใจร่วมงานเรื่องการพัฒนาเครื่องมือหรือต้นแบบสุขภาพดิจิทัล"
         }
       },
       {
         "title": {
-          "en": "Agentic AI & automation",
-          "th": "AI เอเจนต์และระบบอัตโนมัติ"
+          "en": "Clinical AI & Study Design",
+          "th": "วิจัย AI คลินิกและขอจริยธรรม"
         },
         "text": {
-          "en": "AI agents and workflows for health work.",
-          "th": "AI เอเจนต์และเวิร์กโฟลว์สำหรับงานด้านสุขภาพ"
+          "en": "IRB study protocols (ethics review), clinical AI validation (OCR, triage), and peer-reviewed research.",
+          "th": "ออกแบบโครงร่างวิจัยขอจริยธรรม (IRB) ประเมินความแม่นยำ AI และจัดทำรายงานวิจัยตีพิมพ์"
         },
         "subject": {
-          "en": "Collaboration: Agentic AI & automation",
-          "th": "ร่วมงาน: AI เอเจนต์และระบบอัตโนมัติ"
+          "en": "Collaboration: Clinical AI & Study Design",
+          "th": "ร่วมงาน: การวิจัย AI ทางคลินิกและขอจริยธรรม"
         },
         "line": {
-          "en": "I'd like to collaborate on agentic AI and automation.",
-          "th": "สนใจร่วมงานเรื่อง AI เอเจนต์และระบบอัตโนมัติ"
+          "en": "I'd like to collaborate on clinical AI evaluation or an IRB-approved study.",
+          "th": "สนใจร่วมงานเรื่องการประเมิน AI ทางการแพทย์หรืองานวิจัยทางคลินิก"
         }
       },
       {
         "title": {
-          "en": "Research",
-          "th": "งานวิจัย"
+          "en": "Surveillance & Health GIS",
+          "th": "ระบบเฝ้าระวังและแผนที่ระบาดวิทยา"
         },
         "text": {
-          "en": "Field investigations and public health studies.",
-          "th": "การสอบสวนโรคภาคสนามและงานวิจัยด้านสาธารณสุข"
+          "en": "Spatial epidemiology, automated outbreak intelligence, and flood/emergency response dashboards.",
+          "th": "ระบาดวิทยาเชิงพื้นที่ ระบบตรวจจับการระบาดอัตโนมัติ และแดชบอร์ดรับมือภาวะฉุกเฉิน/ภัยพิบัติ"
         },
         "subject": {
-          "en": "Collaboration: Research",
-          "th": "ร่วมงาน: งานวิจัย"
+          "en": "Collaboration: Surveillance & Health GIS",
+          "th": "ร่วมงาน: ระบบเฝ้าระวังและแผนที่ระบาดวิทยา"
         },
         "line": {
-          "en": "I'd like to collaborate on research.",
-          "th": "สนใจร่วมงานวิจัย"
+          "en": "I'd like to collaborate on disease surveillance and spatial health data.",
+          "th": "สนใจร่วมงานเรื่องระบบเฝ้าระวังโรคระบาดและข้อมูลสุขภาพเชิงพื้นที่"
         }
       },
       {
         "title": {
-          "en": "Websites",
-          "th": "เว็บไซต์"
+          "en": "Agentic AI & Automation",
+          "th": "AI เอเจนต์และระบบอัตโนมัติสุขภาพ"
         },
         "text": {
-          "en": "Simple websites, built and deployed for you.",
-          "th": "สร้างและเผยแพร่เว็บไซต์ง่ายๆ ให้คุณ"
+          "en": "Autonomous AI agents, EHR/HIS ingestion pipelines, and administrative healthcare automation.",
+          "th": "AI เอเจนต์ เวิร์กโฟลว์เชื่อมต่อข้อมูล รพ.สต./HIS และระบบประมวลผลข้อมูลสุขภาพอัตโนมัติ"
         },
         "subject": {
-          "en": "Website project",
-          "th": "โปรเจกต์เว็บไซต์"
+          "en": "Collaboration: Agentic AI & Healthcare Automation",
+          "th": "ร่วมงาน: AI เอเจนต์และระบบอัตโนมัติสุขภาพ"
         },
         "line": {
-          "en": "I'd like help building and deploying a simple website.",
-          "th": "สนใจให้ช่วยสร้างและเผยแพร่เว็บไซต์ง่ายๆ"
+          "en": "I'd like to collaborate on agentic AI workflows and healthcare automation.",
+          "th": "สนใจร่วมงานเรื่อง AI เอเจนต์และระบบอัตโนมัติในงานสุขภาพ"
         }
       },
       {
         "title": {
-          "en": "Job opportunities",
-          "th": "โอกาสในการทำงาน"
+          "en": "Health Tech Roles & Leadership",
+          "th": "ร่วมงานระดับผู้นำด้านเฮลท์เทค"
         },
         "text": {
-          "en": "Open to roles in health tech, public health and data. Bangkok or remote.",
-          "th": "เปิดรับตำแหน่งด้านเฮลท์เทค สาธารณสุข และข้อมูล ในกรุงเทพฯ หรือรีโมต"
+          "en": "Open to Medical Director, Clinical Product Lead, or Digital Health Specialist roles. Bangkok or remote.",
+          "th": "เปิดรับตำแหน่ง Medical Director, Clinical Product Lead หรือผู้เชี่ยวชาญสุขภาพดิจิทัล กรุงเทพฯ หรือรีโมต"
         },
         "subject": {
-          "en": "Job opportunity",
-          "th": "โอกาสในการทำงาน"
+          "en": "Opportunity: Health Tech & Clinical Leadership",
+          "th": "โอกาสร่วมงาน: ผู้นำด้านเฮลท์เทคและคลินิก"
         },
         "line": {
-          "en": "I'd like to talk about a job opportunity.",
-          "th": "สนใจพูดคุยเรื่องโอกาสในการทำงาน"
+          "en": "I'd like to talk about a health tech leadership or clinical product role.",
+          "th": "สนใจพูดคุยเรื่องตำแหน่งผู้นำด้านเทคโนโลยีสุขภาพหรือผลิตภัณฑ์การแพทย์"
         }
       }
     ]
