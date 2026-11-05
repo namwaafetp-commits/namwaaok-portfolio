@@ -5,7 +5,7 @@ import { applyStatic, en, getLang, onLangChange, setLang, t, tr } from './i18n.j
 import { motionOn, setMotion } from './motion.js';
 
 const FALLBACK_YOUTUBE = 'https://www.youtube.com/channel/UCqHf52I0w3vtbhtkLtqmIcQ';
-const SOCIAL_LABELS = { youtube: 'YouTube', tiktok: 'TikTok' };
+const SOCIAL_LABELS = { youtube: 'YouTube', tiktok: 'TikTok', github: 'GitHub', linkedin: 'LinkedIn', cv: 'CV' };
 
 const $ = (sel, root = document) => root.querySelector(sel);
 
@@ -43,12 +43,15 @@ const typeLabel = (type) => {
 
 const firstName = (site) => tr(site.fullName || site.name || '').split(/[ ,]/)[0];
 
-// Email first, then each social from site.json. One list feeds both the About tile and the footer.
+// Email first, then each social and CV from site.json. One list feeds both the About tile and the footer.
 function contactLinks(site) {
   const links = [];
   if (site.email) links.push({ name: 'email', label: t('linkEmail'), href: `mailto:${site.email}`, external: false });
   for (const [name, url] of Object.entries(site.socials || {})) {
     if (safeUrl(url)) links.push({ name, label: SOCIAL_LABELS[name] || cap(name), href: url, external: true });
+  }
+  if (site.cv && safeUrl(site.cv)) {
+    links.push({ name: 'cv', label: t('linkCv'), href: safeUrl(site.cv), external: true });
   }
   return links;
 }
@@ -132,7 +135,10 @@ function renderAbout(site, projects) {
   grid.append(
     h('div', { class: 'tile t-bio reveal' },
       h('div', {}, h('span', { class: 'label', text: t('labelWho') }), h('h3', { class: 'big', text: tr(site.tagline) })),
-      site.bio ? h('p', { text: tr(site.bio) }) : null),
+      site.bio ? h('p', { text: tr(site.bio) }) : null,
+      site.award ? h('div', { class: 'award-chip' },
+        h('span', { class: 'award-icon', 'aria-hidden': 'true', text: '🏆' }),
+        h('span', { class: 'award-text', text: tr(site.award.title) })) : null),
     h('div', { class: 'tile t-count reveal' },
       h('span', { class: 'label', text: t('labelProjects') }),
       h('span', { class: 'num', 'data-count': projects.length, text: String(projects.length) }),
@@ -146,6 +152,36 @@ function renderAbout(site, projects) {
       links.map((l) => linkEl(l, {}, h('span', { class: 'ext', 'aria-hidden': 'true', text: '↗' })))));
   }
 
+  if (site.award && safeUrl(site.award.photo)) {
+    const aw = site.award;
+    const awUrl = safeUrl(aw.link) || '#work';
+    grid.append(h('a', {
+      class: 'tile t-winner reveal',
+      href: awUrl,
+      target: awUrl.startsWith('http') ? '_blank' : null,
+      rel: awUrl.startsWith('http') ? 'noopener noreferrer' : null,
+      'aria-label': `${tr(aw.title)} (${t('awardExplore')})`,
+    },
+      h('div', { class: 'winner-bg', style: `background-image: url("${safeUrl(aw.photo)}")` }),
+      h('div', { class: 'scrim' }),
+      h('div', { class: 'winner-content' },
+        h('div', { class: 'winner-top' },
+          h('span', { class: 'winner-badge' },
+            h('span', { class: 'winner-trophy', text: '🏆' }),
+            h('span', { class: 'winner-badge-text', text: t('awardTrack5') })),
+          h('span', { class: 'ext', 'aria-hidden': 'true', text: '↗' })),
+        h('div', { class: 'winner-bottom' },
+          aw.role ? h('span', { class: 'winner-sub', text: tr(aw.role) }) : null,
+          h('h3', { class: 'winner-title', text: tr(aw.title) }),
+          h('span', { class: 'winner-go', text: t('awardExplore') })))));
+  }
+
+  if ((site.skills || []).length) {
+    grid.append(h('div', { class: 'tile t-skills reveal' },
+      h('span', { class: 'label', text: t('labelToolkit') }),
+      h('div', { class: 'pills' }, site.skills.map((s) => h('span', { class: 'pill', text: tr(s) })))));
+  }
+
   for (const ch of site.channels || []) {
     const url = safeUrl((site.socials || {})[ch.social]);
     if (!url) continue;
@@ -155,12 +191,6 @@ function renderAbout(site, projects) {
       h('span', { class: 'label', text: tr(ch.label) }),
       h('p', { text: tr(ch.text) }),
       h('span', { class: 'go', text: tr(ch.cta) })));
-  }
-
-  if ((site.skills || []).length) {
-    grid.append(h('div', { class: 'tile t-skills reveal' },
-      h('span', { class: 'label', text: t('labelToolkit') }),
-      h('div', { class: 'pills' }, site.skills.map((s) => h('span', { class: 'pill', text: tr(s) })))));
   }
 
   const latest = latestProject(projects, site);
@@ -342,7 +372,8 @@ function carouselTile(videos) {
 function projectTile(p, opts = {}) {
   const title = tr(p.title);
   const fullTitle = p.fullTitle ? tr(p.fullTitle) : '';
-  const url = safeUrl(p.link);
+  const repoUrl = safeUrl(p.repo);
+  const url = safeUrl(p.link) || repoUrl;
   const hasVideo = !!p.video;
   const tile = h('article', {
     class: `tile project reveal${p.featured ? ' featured' : ''}${p.tall ? ' tall' : ''}${p.wide ? ' wide' : ''}`,
@@ -370,12 +401,28 @@ function projectTile(p, opts = {}) {
     : url ? h('span', { class: 'arrow', 'aria-hidden': 'true', text: '↗' })
     : h('span', { class: 'badge', text: t('badgePrivate') });
 
+  const idKids = [];
+  if (safeUrl(p.logo)) {
+    idKids.push(h('img', { class: 'p-logo', src: p.logo, alt: '', width: '40', height: '40', loading: 'lazy', decoding: 'async' }));
+  }
+  idKids.push(h('span', { class: 'tag', text: typeLabel(p.type) }));
+  if (repoUrl) {
+    const repoBtn = h('a', {
+      class: 'p-repo',
+      href: repoUrl,
+      target: '_blank',
+      rel: 'noopener noreferrer',
+      'aria-label': `${title} GitHub Repository`,
+      title: 'GitHub Repository',
+    }, icon('github'));
+    repoBtn.addEventListener('click', (e) => e.stopPropagation());
+    idKids.push(repoBtn);
+  }
+
   const description = tr(p.description);
   tile.append(h('div', { class: 'p-in' },
     h('div', { class: 'p-top' },
-      h('div', { class: 'p-id' },
-        safeUrl(p.logo) ? h('img', { class: 'p-logo', src: p.logo, alt: '', width: '40', height: '40', loading: 'lazy', decoding: 'async' }) : null,
-        h('span', { class: 'tag', text: typeLabel(p.type) })),
+      h('div', { class: 'p-id' }, idKids),
       corner),
     h('div', { class: 'p-bottom' },
       h('h3', { text: title }),

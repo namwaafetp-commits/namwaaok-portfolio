@@ -137,6 +137,8 @@ h2 { margin: 0; font: 400 clamp(3rem, 9vw, 8rem)/.95 var(--display); text-transf
 .t-bio { grid-column: span 2; grid-row: span 2; display: flex; flex-direction: column; justify-content: space-between; background: linear-gradient(160deg, #181c10, var(--panel) 60%); }
 .t-bio .big { font: 400 clamp(2.4rem, 5.2vw, 4.6rem)/.98 var(--display); text-transform: uppercase; color: var(--lime); margin: 0; }
 .t-bio p { margin: 18px 0 0; max-width: 46ch; color: #c9c9c2; font-size: 1.05rem; }
+.award-chip { display: inline-flex; align-items: center; gap: 8px; margin-top: 16px; padding: 7px 13px; background: rgba(198, 255, 61, .1); border: 1px solid color-mix(in srgb, var(--lime) 40%, transparent); border-radius: 99px; font: 500 11px var(--mono); color: var(--lime); width: fit-content; }
+.award-chip .award-icon { font-size: 14px; }
 /* Portrait tile (only present when site.json has "photo"): photo | bio | count+social, then skills + latest */
 .t-photo { padding: 0; grid-row: span 2; }
 .t-photo img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center 20%; transition: transform .8s var(--ease); }
@@ -153,6 +155,96 @@ h2 { margin: 0; font: 400 clamp(3rem, 9vw, 8rem)/.95 var(--display); text-transf
 .t-social a { display: flex; align-items: center; gap: 14px; padding: 10px 0; border-bottom: 1px solid var(--line); font-weight: 500; font-size: 1.1rem; transition: color .2s, padding .3s var(--ease); }
 .t-social a:last-child { border-bottom: 0; }
 .t-social a:hover { color: var(--lime); padding-left: 8px; }
+
+/* Winner spotlight tile */
+.t-winner {
+  grid-column: span 2;
+  grid-row: span 2;
+  min-height: 280px;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  overflow: hidden;
+  border-color: color-mix(in srgb, var(--lime) 35%, var(--line));
+}
+.t-winner:hover { border-color: var(--lime); }
+.winner-bg {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center 25%;
+  transition: transform .8s var(--ease);
+}
+.t-winner:hover .winner-bg { transform: scale(1.05); }
+.winner-content {
+  position: relative;
+  z-index: 2;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+}
+.winner-top { display: flex; justify-content: space-between; align-items: center; }
+.winner-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 7px 14px;
+  border-radius: 99px;
+  background: rgba(10, 10, 10, .8);
+  border: 1px solid var(--lime);
+  color: var(--lime);
+  font: 500 11px var(--mono);
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  backdrop-filter: blur(8px);
+}
+.t-winner .ext {
+  display: grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: rgba(10, 10, 10, .7);
+  border: 1px solid rgba(255, 255, 255, .2);
+  color: var(--ink);
+  transition: background .25s, color .25s, transform .25s var(--ease);
+}
+.t-winner:hover .ext {
+  background: var(--lime);
+  color: #000;
+  border-color: var(--lime);
+  transform: translate(2px, -2px);
+}
+.winner-bottom { margin-top: auto; }
+.winner-sub {
+  display: block;
+  font: 500 11px var(--mono);
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--lime);
+  margin-bottom: 6px;
+}
+.winner-title {
+  margin: 0;
+  font: 400 clamp(1.5rem, 2.4vw, 2.1rem)/1.1 var(--display);
+  text-transform: uppercase;
+  color: #fff;
+  letter-spacing: 0;
+}
+.winner-go {
+  display: inline-block;
+  margin-top: 10px;
+  font: 500 11px var(--mono);
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: #d6d6d0;
+  transition: color .2s;
+}
+.t-winner:hover .winner-go { color: var(--lime); text-decoration: underline; }
+
 .t-skills { grid-column: span 2; }
 .pills { display: flex; flex-wrap: wrap; gap: 8px; }
 .pill { display: inline-flex; align-items: center; gap: 8px; padding: 10px 16px; border-radius: 99px; border: 1px solid var(--line); background: #0d0d10; font-weight: 500; transition: background .25s, color .25s, border-color .25s; }
@@ -168,13 +260,15 @@ button.t-latest { text-align: left; cursor: pointer; width: 100%; }
 @media (max-width: 900px) {
   .about-grid { grid-template-columns: repeat(2, 1fr); }
   .t-bio { grid-column: span 2; grid-row: auto; }
+  .t-winner { grid-column: span 2; grid-row: auto; min-height: 280px; }
   .t-skills { grid-column: span 2; }
   .has-photo .t-latest { grid-column: 1 / -1; }
   .t-photo { grid-column: 1 / -1; grid-row: auto; height: 380px; }
 }
 @media (max-width: 520px) {
   .about-grid { grid-template-columns: 1fr; }
-  .t-bio, .t-skills, .t-latest, .has-photo .t-latest { grid-column: auto; }
+  .t-bio, .t-winner, .t-skills, .t-latest, .has-photo .t-latest { grid-column: auto; }
+  .t-winner { min-height: 260px; }
   .t-photo { height: 420px; }
 }
 
@@ -238,6 +332,9 @@ button.t-latest { text-align: left; cursor: pointer; width: 100%; }
 .p-id { display: flex; align-items: center; gap: 8px; min-width: 0; }
 .p-logo { flex: none; width: 40px; height: 40px; object-fit: contain; padding: 4px; border-radius: 12px; background: rgba(10, 10, 10, .55); border: 1px solid rgba(255, 255, 255, .18); backdrop-filter: blur(6px); }
 .tag { font: 500 11px var(--mono); letter-spacing: .16em; text-transform: uppercase; padding: 6px 11px; border-radius: 99px; background: rgba(10, 10, 10, .55); border: 1px solid rgba(255, 255, 255, .14); backdrop-filter: blur(6px); }
+.p-repo { display: inline-grid; place-items: center; width: 32px; height: 32px; border-radius: 50%; background: rgba(10, 10, 10, .6); border: 1px solid rgba(255, 255, 255, .18); backdrop-filter: blur(6px); color: var(--ink); pointer-events: auto; position: relative; z-index: 3; transition: background .25s var(--ease), border-color .25s, transform .25s var(--ease), color .25s; }
+.p-repo:hover { background: var(--lime); color: #000; border-color: var(--lime); transform: scale(1.1); }
+.p-repo .ico { width: 16px; height: 16px; }
 .badge { font: 500 10px var(--mono); letter-spacing: .14em; text-transform: uppercase; padding: 6px 11px; border-radius: 99px; background: rgba(255, 255, 255, .08); border: 1px dashed rgba(255, 255, 255, .3); color: #d6d6d0; }
 .arrow { display: grid; place-items: center; width: 40px; height: 40px; border-radius: 50%; background: var(--lime); color: #000; font-size: 1.15rem; transition: transform .45s var(--ease); }
 .project:hover .arrow { transform: rotate(45deg) scale(1.1); }
@@ -334,11 +431,11 @@ html.motion-off .carousel .slide { transition: none; }
 /* ============ Thai typography ============
    Anton has no Thai glyphs, so Thai falls back to Noto Sans Thai. Use its heavy weight, stop faux-bold on Anton,
    loosen the tight display line-height (tone marks need room) and drop letter-spacing meant for Latin capitals. */
-html[lang="th"] :is(.logo, .marquee, h2, .t-bio .big, .ch-name, .collab-card h3, .t-latest .name, .project.featured .p-bottom h3, .nav-links) { font-weight: 800; font-synthesis-weight: none; }
+html[lang="th"] :is(.logo, .marquee, h2, .t-bio .big, .ch-name, .collab-card h3, .t-latest .name, .project.featured .p-bottom h3, .nav-links, .winner-title) { font-weight: 800; font-synthesis-weight: none; }
 html[lang="th"] .marquee { line-height: 1.3; font-size: clamp(48px, 11.5vw, 210px); }
-html[lang="th"] :is(h2, .t-bio .big, .t-latest .name, .collab-card h3, .ch-name, .project.featured .p-bottom h3) { line-height: 1.25; }
-html[lang="th"] :is(.eyebrow, .label, .tag, .go, .tab, .hero-foot, .foot-note, .nav-links, .menu-btn, .badge, .chips span, .modal-title, .t-count small, .socials a, .loader-name) { letter-spacing: 0; }
-html[lang="th"] :is(.label, .go, .eyebrow, .tab, .tag, .badge) { font-size: 13px; }
+html[lang="th"] :is(h2, .t-bio .big, .t-latest .name, .collab-card h3, .ch-name, .project.featured .p-bottom h3, .winner-title) { line-height: 1.25; }
+html[lang="th"] :is(.eyebrow, .label, .tag, .go, .tab, .hero-foot, .foot-note, .nav-links, .menu-btn, .badge, .chips span, .modal-title, .t-count small, .socials a, .loader-name, .award-chip, .winner-badge, .winner-sub, .winner-go) { letter-spacing: 0; }
+html[lang="th"] :is(.label, .go, .eyebrow, .tab, .tag, .badge, .winner-go) { font-size: 13px; }
 html[lang="th"] .nav-links { font-size: 14px; }
 html[lang="th"] .p-bottom h3, html[lang="th"] .collab-card p, html[lang="th"] .p-bottom p { line-height: 1.5; }
 @media (max-width: 700px) { html[lang="th"] .nav-links { font-size: clamp(2.6rem, 14vw, 4.4rem); } }

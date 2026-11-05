@@ -23,7 +23,10 @@ Portfolio of **Waritnun Anupat, MD**: a doctor in the Field Epidemiology Trainin
 
 ## Featured work
 
-- **Plathong**: a LINE chatbot for home blood-pressure tracking. Send a photo of the monitor and AI reads it, charts the trend and reminds you of appointments.
+- **Saman Nearby (สมานใกล้บ้าน)**: winner of Track 5 (Folk Medicine) at the DTAM Digital Health & AI Hackathon 2026. A community referral prototype connecting folk healers, village health volunteers (อสม.) and primary-care units with AI-assisted drafting and clinician verification.
+- **Plathong**: a LINE chatbot for home blood-pressure tracking with AI OCR. PI of an ethics-approved clinical trial in Krabi (KBO-IRB 2026/13.0109).
+- **Lamun (ละมุน)**: a private, Thai-first menstrual cycle journal built as a native iOS app in SwiftUI with private local-first storage and optional cloud sync.
+- **EpiTools**: surveillance reference for 111 notifiable diseases from the DDC case-definition manual, plus an offline flood response leptospirosis screening tool.
 - **Dog-Bite-Me**: an offline-first rabies guide in Thai, English and Burmese.
 - **Episignal**: open global outbreak intelligence with every event linked to its source.
 - **MantaSlide**: control PowerPoint from your phone over Wi-Fi.

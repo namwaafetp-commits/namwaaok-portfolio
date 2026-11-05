@@ -13,32 +13,56 @@
     "th": "แพทย์ · นักพัฒนา · นักสืบโรค"
   },
   "bio": {
-    "en": "Waritnun Anupat, MD: a doctor in the Field Epidemiology Training Program (FETP), Bangkok. I build health apps, analyse data and explore agentic AI and automation. If you share these interests, get in touch.",
-    "th": "นพ.วริทธิ์นันท์ อนุพัฒน์ แพทย์ในหลักสูตรฝึกอบรมแพทย์ระบาดวิทยาภาคสนาม (FETP) กรุงเทพฯ ผมสร้างแอปสุขภาพ วิเคราะห์ข้อมูล และสนใจ AI เอเจนต์กับระบบอัตโนมัติ หากสนใจเรื่องเหล่านี้เหมือนกัน ติดต่อกันได้เลยครับ"
+    "en": "Waritnun Anupat, MD: physician and third-year Preventive Medicine (Epidemiology) resident in Thailand's Field Epidemiology Training Program (FETP), with five years of clinical practice in Krabi. I design digital health tools from the clinical workflow up and build them with AI coding assistants. Winner of Track 5 (Folk Medicine) at the DTAM Digital Health & AI Hackathon 2026. Main focus: chronic disease home monitoring and outbreak intelligence.",
+    "th": "นพ.วริทธิ์นันท์ อนุพัฒน์ แพทย์ประจำบ้านเวชศาสตร์ป้องกัน (ระบาดวิทยา) ชั้นปีที่ 3 โครงการฝึกอบรมแพทย์ระบาดวิทยาภาคสนาม (FETP) กรมควบคุมโรค พร้อมประสบการณ์ตรวจรักษา 5 ปีใน จ.กระบี่ ออกแบบเครื่องมือดิจิทัลสุขภาพจากเวิร์กโฟลว์ทางคลินิกจริงและสร้างด้วย AI coding assistants ชนะเลิศ Track 5 งาน DTAM Digital Health & AI Hackathon 2026 สนใจการติดตามผู้ป่วยโรคเรื้อรังที่บ้านและงานเฝ้าระวังโรคระบาด"
+  },
+  "award": {
+    "title": {
+      "en": "Winner, Track 5 (Folk Medicine) · DTAM Hackathon 2026",
+      "th": "รางวัลชนะเลิศ Track 5 การแพทย์พื้นบ้าน · DTAM Hackathon 2026"
+    },
+    "project": "Saman Nearby",
+    "year": 2026,
+    "photo": "assets/img/hackathon-winner.jpg",
+    "role": {
+      "en": "Team Lead · Clinical & Product Direction",
+      "th": "หัวหน้าทีม · ทิศทางคลินิกและผลิตภัณฑ์"
+    },
+    "link": "https://saman-herbal-safety.vercel.app/nearby/refer/split"
   },
   "skills": [
     {
-      "en": "AI tools",
-      "th": "เครื่องมือ AI"
+      "en": "AI-Assisted Dev",
+      "th": "การพัฒนาด้วย AI"
     },
     "Python",
     "R",
+    "SQL",
     {
-      "en": "Data analytics",
-      "th": "การวิเคราะห์ข้อมูล"
+      "en": "Epidemiology & GIS",
+      "th": "ระบาดวิทยา & GIS"
     },
     {
-      "en": "Video editing",
-      "th": "ตัดต่อวิดีโอ"
+      "en": "Clinical UX & PDPA",
+      "th": "การออกแบบคลินิก & PDPA"
+    },
+    "iOS (SwiftUI)",
+    "Next.js / React",
+    {
+      "en": "Health Videos",
+      "th": "วิดีโอสื่อสารสุขภาพ"
     }
   ],
   "photo": "assets/img/portrait.jpg",
-  "latest": "MantaSlide",
+  "latest": "Saman Nearby",
   "email": "anupatwritnun@gmail.com",
   "socials": {
+    "github": "https://github.com/namwaafetp-commits",
+    "linkedin": "https://www.linkedin.com/in/waritnun-anupat-505653128",
     "youtube": "https://www.youtube.com/channel/UCqHf52I0w3vtbhtkLtqmIcQ",
     "tiktok": "https://www.tiktok.com/@namwaaokok"
   },
+  "cv": "assets/Waritnun_Anupat_CV.pdf",
   "channels": [
     {
       "social": "youtube",
